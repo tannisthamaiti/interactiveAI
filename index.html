@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NumPy Built-in Functions Adventure</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+        .slide-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            border-left: 5px solid #007bff;
+        }
+        h1, h3 {
+            color: #007bff;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 10px;
+            margin-top: 25px;
+        }
+        pre {
+            background-color: #e8f5e9;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.95em;
+            border: 1px solid #c8e6c9;
+        }
+        code {
+            color: #d63384;
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        strong {
+            color: #28a745;
+        }
+        .question-box {
+            background-color: #e0f7fa;
+            border: 1px solid #b2ebf2;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 25px;
+        }
+        input[type="text"], input[type="number"] {
+            padding: 10px;
+            width: calc(100% - 120px);
+            margin-right: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .feedback {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .feedback.correct {
+            color: #28a745;
+        }
+        .feedback.incorrect {
+            color: #dc3545;
+        }
+        .challenge-solution-hint button {
+            background-color: #ffc107;
+            color: #333;
+        }
+        .challenge-solution-hint button:hover {
+            background-color: #e0a800;
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+        ol {
+            list-style-type: decimal;
+            margin-left: 20px;
+        }
+    </style>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+    <div class="slide-container" id="slide1">
+        <div class="slide-content">
+            <h1>Welcome to the NumPy Command Center! 💡</h1>
+            <p>Hey future data wizard! You already know NumPy makes number lists (arrays) super-fast. But what if you need to ask your array questions, like "What's the biggest number?" or "What's the average?"</p>
+            <p>That's where <strong>NumPy's Built-in Functions</strong> in! They are like special command buttons that give your arrays superpowers to calculate things instantly. Let's explore some of them!</p>
+
+            <div class="question-box">
+                <h3>❓ Question 1: What's Your Favorite Superpower?</h3>
+                <p>If your favorite video game character could get a new math superpower, what would it be?</p>
+                <input type="text" id="q1_answer" placeholder="Type your answer here!">
+                <button onclick="checkAnswer('q1', document.getElementById('q1_answer').value)">Submit</button>
+                <p id="q1_feedback" class="feedback"></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide2">
+        <div class="slide-content">
+            <h1>Finding the Extremes: <code>max()</code> and <code>min()</code> 📈📉</h1>
+            <p>Imagine you have a list of high scores from a game. You want to know the <em>absolute best</em> score and the <em>lowest</em> score. NumPy makes this a breeze!</p>
+            <ul>
+                <li><code>.max()</code>: Finds the largest value in your array.</li>
+                <li><code>.min()</code>: Finds the smallest value in your array.</li>
+            </ul>
+
+            <h3>Example Code:</h3>
+            <pre><code>import numpy as np
+
+game_scores = np.array([120, 85, 205, 150, 99])
+
+highest_score = game_scores.max()
+lowest_score = game_scores.min()
+
+print("Highest Score:", highest_score) # Output: Highest Score: 205
+print("Lowest Score:", lowest_score)   # Output: Lowest Score: 85</code></pre>
+
+            <div class="question-box">
+                <h3>❓ Question 2: What would be the output of <code>np.array([1, 10, 5]).max()</code>?</h3>
+                <input type="number" id="q2_answer" placeholder="Your number here">
+                <button onclick="checkAnswer('q2', document.getElementById('q2_answer').value)">Submit</button>
+                <p id="q2_feedback" class="feedback"></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide3">
+        <div class="slide-content">
+            <h1>Calculating the Average: <code>mean()</code> 📊</h1>
+            <p>When you want to know the "typical" value in a list of numbers, you calculate the <strong>average</strong>. In math class, you add all the numbers and divide by how many there are. NumPy's <code>mean()</code> function does this for you instantly!</p>
+            <p>The formula for the mean ($\mu$) is:</p>
+            $$ \mu = \frac{\sum_{i=1}^{N} x_i}{N} $$
+            <p>Where:</p>
+            <ul>
+                <li>$ \sum x_i $ means "add all the numbers"</li>
+                <li>$ N $ is the count of numbers</li>
+            </ul>
+
+            <h3>Example Code:</h3>
+            <pre><code>import numpy as np
+
+student_heights = np.array([150, 155, 160, 148, 152]) # Heights in cm
+
+average_height = student_heights.mean()
+
+print("Average Height:", average_height) # Output: Average Height: 153.0</code></pre>
+
+            <div class="question-box">
+                <h3>❓ Question 3: What is the average of <code>np.array([10, 20, 30])</code>?</h3>
+                <input type="number" id="q3_answer" placeholder="Your number here">
+                <button onclick="checkAnswer('q3', document.getElementById('q3_answer').value)">Submit</button>
+                <p id="q3_feedback" class="feedback"></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide4">
+        <div class="slide-content">
+            <h1>Summing It All Up: <code>sum()</code> ➕</h1>
+            <p>Sometimes, you just need to add <em>all</em> the numbers in your array together. Maybe it's the total points from a game level, or the total amount of money collected. The <code>sum()</code> function is perfect for this.</p>
+
+            <h3>Example Code:</h3>
+            <pre><code>import numpy as np
+
+daily_sales = np.array([100, 150, 75, 200, 125]) # Sales for 5 days
+
+total_sales = daily_sales.sum()
+
+print("Total Sales for the Week:", total_sales) # Output: Total Sales for the Week: 650</code></pre>
+
+            <div class="question-box">
+                <h3>❓ Question 4: If you have <code>np.array([5, 5, 5])</code>, what would its <code>sum()</code> be?</h3>
+                <input type="number" id="q4_answer" placeholder="Your number here">
+                <button onclick="checkAnswer('q4', document.getElementById('q4_answer').value)">Submit</button>
+                <p id="q4_feedback" class="feedback"></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide5">
+        <div class="slide-content">
+            <h1>How Many Numbers? <code>size</code> 📦</h1>
+            <p>It's not a function (it doesn't have parentheses <code>()</code>), but a very useful <strong>attribute</strong> (like a property) of a NumPy array. <code>.size</code> tells you how many elements (numbers) are in your array. This is super helpful for knowing how much data you're working with.</p>
+
+            <h3>Example Code:</h3>
+            <pre><code>import numpy as np
+
+my_shopping_list_items = np.array(['milk', 'eggs', 'bread', 'juice', 'cheese']) # This array contains strings, but .size works similarly for numbers
+
+number_of_items = my_shopping_list_items.size
+
+print("Number of items on my list:", number_of_items) # Output: Number of items on my list: 5</code></pre>
+
+            <div class="question-box">
+                <h3>❓ Question 5: If you have an array <code>np.array([10, 20, 30, 40])</code>, what would its <code>size</code> be?</h3>
+                <input type="number" id="q5_answer" placeholder="Your number here">
+                <button onclick="checkAnswer('q5', document.getElementById('q5_answer').value)">Submit</button>
+                <p id="q5_feedback" class="feedback"></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide6">
+        <div class="slide-content">
+            <h1>Putting It All Together: Your Challenge! 🚀</h1>
+            <p>You've learned about <code>max()</code>, <code>min()</code>, <code>mean()</code>, <code>sum()</code>, and <code>size</code>. Now it's time for a mini-quest!</p>
+            <p>Imagine you are analyzing the daily steps taken by a group of friends over a week.</p>
+
+            <h3>Steps Data:</h3>
+            <pre><code>import numpy as np
+daily_steps = np.array([5000, 7500, 6000, 8000, 4500, 9000, 7000])</code></pre>
+
+            <h3>Your Challenge:</h3>
+            <p>Use NumPy's built-in functions to find:</p>
+            <ol>
+                <li>The <strong>maximum</strong> steps taken in a day.</li>
+                <li>The <strong>minimum</strong> steps taken in a day.</li>
+                <li>The <strong>average</strong> daily steps.</li>
+                <li>The <strong>total</strong> steps taken over the week.</li>
+                <li>How many <strong>days</strong> of data are there (using <code>.size</code>)?</li>
+            </ol>
+
+            <div class="question-box">
+                <h3>❓ Question 6: What is the average daily steps from the data above?</h3>
+                <input type="number" id="q6_answer" placeholder="Your number here (e.g., 6500)">
+                <button onclick="checkAnswer('q6', document.getElementById('q6_answer').value)">Submit</button>
+                <p id="q6_feedback" class="feedback"></p>
+            </div>
+
+            <div class="challenge-solution-hint">
+                <h3>💡 Solution Hint (click to reveal after trying!):</h3>
+                <button onclick="revealSolution()">Show Solution</button>
+                <div id="solution" style="display:none; margin-top: 10px; padding: 10px; border: 1px dashed #ccc; background-color: #f9f9f9;">
+                    <pre><code>
+import numpy as np
+daily_steps = np.array([5000, 7500, 6000, 8000, 4500, 9000, 7000])
+
+print("Max Steps:", daily_steps.max())     # 9000
+print("Min Steps:", daily_steps.min())     # 4500
+print("Average Steps:", daily_steps.mean()) # ~6857.14
+print("Total Steps:", daily_steps.sum())   # 48000
+print("Number of Days:", daily_steps.size) # 7
+                    </code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // JavaScript for handling answers
+        function checkAnswer(questionId, userAnswer) {
+            let feedbackElement = document.getElementById(questionId + '_feedback');
+            let isCorrect = false;
+
+            if (questionId === 'q1') {
+                // For open-ended questions, we just acknowledge the input
+                feedbackElement.textContent = "That's a cool superpower! Keep imagining!";
+                feedbackElement.className = 'feedback correct';
+                return;
+            } else if (questionId === 'q2') {
+                isCorrect = (parseInt(userAnswer) === 10);
+            } else if (questionId === 'q3') {
+                isCorrect = (parseFloat(userAnswer) === 20.0);
+            } else if (questionId === 'q4') {
+                isCorrect = (parseInt(userAnswer) === 15);
+            } else if (questionId === 'q5') {
+                isCorrect = (parseInt(userAnswer) === 4);
+            } else if (questionId === 'q6') {
+                // Average of [5000, 7500, 6000, 8000, 4500, 9000, 7000] is 48000 / 7 = 6857.14...
+                // Allow a small range for float comparison
+                const actualAvg = 48000 / 7;
+                isCorrect = (Math.abs(parseFloat(userAnswer) - actualAvg) < 0.1); // Within 0.1
+            }
+
+            if (isCorrect) {
+                feedbackElement.textContent = "🎉 Correct! You got it!";
+                feedbackElement.className = 'feedback correct';
+            } else {
+                feedbackElement.textContent = "🧐 Not quite! Give it another try!";
+                feedbackElement.className = 'feedback incorrect';
+            }
+        }
+
+        function revealSolution() {
+            let solutionDiv = document.getElementById('solution');
+            if (solutionDiv.style.display === 'none') {
+                solutionDiv.style.display = 'block';
+            } else {
+                solutionDiv.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
