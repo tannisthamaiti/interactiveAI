@@ -27,6 +27,12 @@
             color: #1e3a5f;
             margin-bottom: 10px;
         }
+        h2 {
+            font-size: 2em;
+            color: #1e3a5f;
+            margin-top: 50px;
+            margin-bottom: 20px;
+        }
         p.subtitle {
             font-size: 1.2em;
             color: #555;
@@ -70,12 +76,19 @@
             color: #1e88e5;
             align-self: flex-end;
         }
-        /* New card color */
+        /* Regression card color */
         .card.regression {
             border-top: 5px solid #d9534f;
         }
         .card.regression h3, .card.regression .card-footer {
             color: #d9534f;
+        }
+         /* Video card color */
+        .card.video {
+            border-top: 5px solid #28a745;
+        }
+        .card.video h3, .card.video .card-footer {
+            color: #28a745;
         }
     </style>
 </head>
@@ -87,6 +100,7 @@
         <p class="subtitle">A collection of interactive slide decks for learning about the past, present, and future of Artificial Intelligence. Click on a topic to begin!</p>
     </header>
 
+    <h2>Interactive Lessons</h2>
     <div class="deck-grid">
         <a href="t1.html" class="card">
             <h3>Lesson 1: AI in Your World</h3>
@@ -107,14 +121,14 @@
         </a>
 
         <a href="t6.html" class="card">
-            <h3>Lesson 4: More Nature-Inspired AI</h3>
-            <p>AI doesn't just learn from brains! Explore how evolution (Genetic Algorithms) and ant colonies (Swarm Intelligence) inspire powerful AI techniques.</p>
+            <h3>Lesson 4: Nature's Other Ideas</h3>
+            <p>AI doesn't just learn from brains! Explore how evolution, ant colonies, and even our immune systems inspire powerful AI techniques.</p>
             <div class="card-footer">Discover Bio-Inspired AI &rarr;</div>
         </a>
         
         <a href="t4.html" class="card">
             <h3>Lesson 5: Advanced AI Topics</h3>
-            <p>Go a step further by learning about Brain-Computer Interfaces (BCIs) and the different "Gradient Descent" strategies that allow AIs to learn so efficiently.</p>
+            <p>Go a step further by learning about Brain-Computer Interfaces (BCIs) and the "Gradient Descent" strategies that allow AIs to learn so efficiently.</p>
             <div class="card-footer">Go Deeper &rarr;</div>
         </a>
 
@@ -123,6 +137,12 @@
             <p>When will AI become as smart as a human? This presentation explores the different predictions from top AI researchers around the world.</p>
             <div class="card-footer">Look Ahead &rarr;</div>
         </a>
+        
+        <a href="h1.html" class="card">
+            <h3>NumPy Built-in Functions Adventure</h3>
+            <p>Explore some of the most useful NumPy functions for data analysis, including max(), min(), mean(), sum(), size, median(), mode(), and std(). Test your knowledge with interactive questions and challenges.</p>
+            <div class="card-footer">View Details &rarr;</div>
+        </a>
 
         <a href="t7.html" class="card regression">
             <h3>Lesson 7: Predicting the Future!</h3>
@@ -130,6 +150,22 @@
             <div class="card-footer">Start Predicting &rarr;</div>
         </a>
     </div>
+
+    <h2>Recommended Videos 🎬</h2>
+    <div class="deck-grid">
+        <a href="https://www.youtube.com/watch?v=WXuK6gekU1Y" target="_blank" class="card video">
+            <h3>AlphaGo - The Movie</h3>
+            <p>This award-winning documentary follows the DeepMind team as they build an AI to take on the world's best Go player. It's an exciting story about a huge moment in AI history!</p>
+            <div class="card-footer">Watch on YouTube &rarr;</div>
+        </a>
+
+        <a href="https://www.youtube.com/watch?v=jMW8_YVFgzY" target="_blank" class="card video">
+            <h3>I am AI</h3>
+            <p>A short, beautifully animated video that explains what AI is, how it learns, and how it's already a part of our daily lives in ways you might not expect.</p>
+            <div class="card-footer">Watch on YouTube &rarr;</div>
+        </a>
+    </div>
+
 </div>
 
 </body>
