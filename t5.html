@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI's Brain: How Neurons Work</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #e0f7fa; /* Light teal background */
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 25px 35px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+        h1, h2 {
+            color: #00796b; /* Dark teal heading */
+            border-bottom: 2px solid #b2dfdb; /* Lighter teal border */
+            padding-bottom: 10px;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #00796b;
+        }
+        .slide {
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed #e0e0e0;
+        }
+        .quiz {
+            background-color: #e0f2f1; /* Lightest teal for quiz */
+            padding: 18px;
+            border-radius: 10px;
+            margin-top: 25px;
+            border: 1px solid #b2dfdb;
+        }
+        .quiz p {
+            font-weight: bold;
+            color: #004d40; /* Darker text for question */
+        }
+        button {
+            background-color: #00796b;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 17px;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #004d40;
+        }
+        .feedback {
+            font-weight: bold;
+            margin-top: 10px;
+            font-size: 1.1em;
+        }
+        .analogy {
+            background-color: #f7fcfc;
+            border-left: 5px solid #009688; /* Accent border */
+            padding: 15px;
+            margin: 20px 0;
+            font-style: italic;
+            border-radius: 8px;
+            color: #4a4a4a;
+        }
+        .interactive-perceptron {
+            background-color: #f0f8ff; /* Light blue for interactive section */
+            border: 1px solid #a7d9f7;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+        .perceptron-output {
+            margin-top: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            border-radius: 5px;
+            font-weight: bold;
+            color: #3f51b5; /* Indigo for output */
+        }
+        .input-group {
+            margin-bottom: 10px;
+        }
+        label {
+            display: inline-block;
+            width: 150px;
+            font-weight: normal;
+        }
+        input[type="number"] {
+            width: 60px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        hr {
+            border: 0;
+            height: 1px;
+            background: #eee;
+            margin: 20px 0;
+        }
+        .concept-list li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>AI's Brain: How Neurons Are Designed 🧠💡</h1>
+    <p>Get ready to explore the basic building blocks of Artificial Intelligence: Neurons!</p>
+
+    <div class="slide">
+        <h2>Slide 1: Real Brains vs. AI Brains</h2>
+        <p>Our amazing human brain is made of billions of tiny cells called <strong>neurons</strong>. They send electrical signals to each other to help us think, feel, and move.</p>
+        <p>AI tries to copy this brilliant idea using "artificial neurons." Let's see how!</p>
+
+        <h3>The Real Neuron's Job:</h3>
+        <ul class="concept-list">
+            <li><strong>Dendrites:</strong> 🌱 Receive messages from other neurons.</li>
+            <li><strong>Cell Body (Soma):</strong> 🧠 Processes and sums up all the messages.</li>
+            <li><strong>Axon:</strong> ⚡ If the message is strong enough, it sends its own message to other neurons.</li>
+            <li><strong>Synapses:</strong> 💪 These are the connections between neurons, and their strength determines how much one neuron affects another.</li>
+        </ul>
+        
+        <div class="quiz">
+            <p>🤔 Quiz Time!</p>
+            <p>What part of a real neuron is like a "receiver" of messages?</p>
+            <input type="radio" name="q1" value="a"> Axon<br>
+            <input type="radio" name="q1" value="b" id="correct1"> Dendrite<br>
+            <input type="radio" name="q1" value="c"> Cell Body<br>
+            <button onclick="checkQuiz(1)">Check Answer</button>
+            <p id="feedback1" class="feedback"></p>
+        </div>
+    </div>
+
+    <div class="slide">
+        <h2>Slide 2: The Perceptron - AI's Simplest Neuron</h2>
+        <p>The <strong>Perceptron</strong> was one of the very first artificial neurons, invented in 1958. It's a simple model that acts like a tiny decision-maker.</p>
+
+        <h3>How it works (Mimicking the Brain):</h3>
+        <ul class="concept-list">
+            <li><strong>Inputs (like Dendrites):</strong> The Perceptron takes several pieces of information (numbers) as input.</li>
+            <li><strong>Weights (like Synapses):</strong> Each input is multiplied by a "weight." A bigger weight means that input is more important to the decision.</li>
+            <li><strong>Summation (like Cell Body):</strong> All the weighted inputs are added together. We also add a special number called a "bias" to help adjust the decision.</li>
+            <li><strong>Activation Function (like Axon Firing):</strong> If the final sum is bigger than a certain "threshold," the Perceptron "fires" (outputs a 1). Otherwise, it stays "off" (outputs a 0).</li>
+        </ul>
+
+        <div class="analogy">
+            <p><strong>Analogy: A "Yes/No" Decision Maker</strong></p>
+            <p>Imagine the Perceptron is deciding if you should bring an umbrella. Inputs might be "Is it cloudy?" and "Is it raining?". Each input gets a "weight" based on how much you care about it. If the combined weighted inputs pass your "worried-enough-to-bring-an-umbrella" threshold, you grab it! Otherwise, you don't.</p>
+        </div>
+        
+        <div class="quiz">
+            <p>🤔 Quiz Time!</p>
+            <p>In a Perceptron, what do "weights" represent?</p>
+            <input type="radio" name="q2" value="a"> The final decision<br>
+            <input type="radio" name="q2" value="b" id="correct2"> How important each input is<br>
+            <input type="radio" name="q2" value="c"> The number of inputs<br>
+            <button onclick="checkQuiz(2)">Check Answer</button>
+            <p id="feedback2" class="feedback"></p>
+        </div>
+    </div>
+
+    <div class="slide">
+        <h2>Slide 3: Interactive Example: The "Should I Go Outside?" Perceptron</h2>
+        <p>Let's build a simple Perceptron to decide if you should go outside today. You can change the inputs and see what the Perceptron decides!</p>
+
+        <div class="interactive-perceptron">
+            <h3>My "Go Outside" Perceptron</h3>
+            <p>Our Perceptron has a **Threshold of 8**. If the total sum is 8 or more, it says YES (1)!</p>
+            <hr>
+            <div class="input-group">
+                <label for="weatherInput">1. Is Weather Good? (1=Yes, 0=No)</label>
+                <input type="number" id="weatherInput" value="1" min="0" max="1">
+                <span id="weatherWeightDisplay">(Weight: 5)</span>
+            </div>
+            <div class="input-group">
+                <label for="friendsInput">2. Are Friends Free? (1=Yes, 0=No)</label>
+                <input type="number" id="friendsInput" value="1" min="0" max="1">
+                <span id="friendsWeightDisplay">(Weight: 4)</span>
+            </div>
+            <div class="input-group">
+                <label for="homeworkInput">3. Is Homework Done? (1=Yes, 0=No)</label>
+                <input type="number" id="homeworkInput" value="0" min="0" max="1">
+                <span id="homeworkWeightDisplay">(Weight: 2)</span>
+            </div>
+            
+            <button onclick="calculatePerceptron()">What's the decision?</button>
+            <div class="perceptron-output">
+                <strong>Total Weighted Sum:</strong> <span id="sumOutput">0</span><br>
+                <strong>Perceptron Output (Go Outside?):</strong> <span id="decisionOutput">0 (No)</span>
+            </div>
+        </div>
+        <p>Try changing the inputs! See how the weights make some factors more important than others.</p>
+    </div>
+
+    <div class="slide">
+        <h2>Slide 4: Modern Neurons: More Nuance, More Power</h2>
+        <p>The Perceptron was a great start, but real neurons and modern AI need more flexibility. Here's how artificial neurons evolved:</p>
+        
+        <h3>Beyond On/Off (Smoother Activation):</h3>
+        <p>Instead of just 0 or 1, modern neurons often use "smoother" activation functions. Imagine a light dimmer instead of just an on/off switch. This allows them to output values like 0.2, 0.7, or 0.9, which can mean things like:</p>
+        <ul class="concept-list">
+            <li>"I'm 70% sure this is a cat."</li>
+            <li>"The signal strength is medium."</li>
+        </ul>
+        <p>This helps AI learn much more complex and subtle patterns.</p>
+        
+        <h3>Layers and Layers (Deep Learning):</h3>
+        <p>The human brain has many layers for processing information. Our eyes, for example, send information through several layers of neurons that detect simple shapes first, then combine them into more complex objects.</p>
+        <p>Modern AI (called **Deep Learning**) uses many layers of these improved artificial neurons. Each layer learns to understand different features. For example:</p>
+        <ul>
+            <li><strong>First Layer:</strong> Might detect simple lines or edges in a picture.</li>
+            <li><strong>Middle Layers:</strong> Might combine lines to recognize shapes like eyes, noses, or wheels.</li>
+            <li><strong>Last Layer:</strong> Combines shapes to recognize whole objects, like a face or a car.</li>
+        </ul>
+        
+        <div class="quiz">
+            <p>🤔 Quiz Time!</p>
+            <p>How do "smoother" activation functions help modern AI?</p>
+            <input type="radio" name="q3" value="a"> They make the AI run faster.<br>
+            <input type="radio" name="q3" value="b" id="correct3"> They allow the AI to learn more nuanced and subtle patterns.<br>
+            <input type="radio" name="q3" value="c"> They make the AI smaller.<br>
+            <button onclick="checkQuiz(3)">Check Answer</button>
+            <p id="feedback3" class="feedback"></p>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Quiz Logic
+    function checkQuiz(questionNumber) {
+        const correctId = 'correct' + questionNumber;
+        const feedbackId = 'feedback' + questionNumber;
+
+        const correctRadioButton = document.getElementById(correctId);
+        const feedbackElement = document.getElementById(feedbackId);
+
+        if (correctRadioButton && correctRadioButton.checked) {
+            feedbackElement.textContent = "✅ Correct! Great job!";
+            feedbackElement.style.color = "green";
+        } else {
+            feedbackElement.textContent = "❌ Not quite, try again!";
+            feedbackElement.style.color = "red";
+        }
+    }
+
+    // Perceptron Logic
+    function calculatePerceptron() {
+        const weather = parseInt(document.getElementById('weatherInput').value);
+        const friends = parseInt(document.getElementById('friendsInput').value);
+        const homework = parseInt(document.getElementById('homeworkInput').value);
+
+        // Define weights (you can change these to experiment!)
+        const weatherWeight = 5;
+        const friendsWeight = 4;
+        const homeworkWeight = 2; // Homework is less important than fun, but still a factor!
+
+        // Define threshold (you can change this too!)
+        const threshold = 8;
+
+        const weightedSum = (weather * weatherWeight) + (friends * friendsWeight) + (homework * homeworkWeight);
+        
+        let decision = 0; // Default to No (0)
+        let decisionText = "0 (No)";
+        if (weightedSum >= threshold) {
+            decision = 1; // Yes (1)
+            decisionText = "1 (Yes!)";
+        }
+
+        document.getElementById('sumOutput').textContent = weightedSum;
+        document.getElementById('decisionOutput').textContent = decisionText;
+    }
+
+    // Initial calculation for the interactive perceptron on load
+    document.addEventListener('DOMContentLoaded', calculatePerceptron);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI: The Secret Code Running Your World</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        #presentation-container {
+            width: 90%;
+            max-width: 800px;
+            height: 500px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px B30px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            padding: 40px;
+            box-sizing: border-box;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+            transform: scale(0.95);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+        }
+
+        /* Slide specific styles */
+        .slide-1 { background: linear-gradient(135deg, #007adf 0%, #00ecbc 100%); color: white; }
+        .slide-2 { background-color: #ffffff; }
+        .slide-3 { background-color: #eef2f7; }
+        .slide-4 { background-color: #ffffff; }
+        .slide-5 { background-color: #eef2f7; }
+        .slide-6 { background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%); color: #333; }
+
+        h1 { font-size: 2.8em; margin: 0; }
+        h2 { font-size: 2em; color: #007adf; margin-bottom: 20px; }
+        p { font-size: 1.1em; line-height: 1.6; max-width: 600px; }
+        .subtitle { font-size: 1.2em; margin-top: 10px; opacity: 0.8; }
+
+        .navigation {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 40px;
+            box-sizing: border-box;
+        }
+
+        .nav-button {
+            background-color: #007adf;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .nav-button:hover { background-color: #0056b3; transform: translateY(-2px); }
+        .nav-button:disabled { background-color: #ccc; cursor: not-allowed; transform: none; }
+        
+        .slide-counter {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 1em;
+            font-weight: 600;
+            color: #aaa;
+        }
+        
+        /* Interactive Elements */
+        .quiz-container { margin-top: 20px; }
+        .quiz-option {
+            display: inline-block;
+            background: #fff;
+            padding: 12px 25px;
+            margin: 5px;
+            border-radius: 15px;
+            cursor: pointer;
+            border: 2px solid #ddd;
+            transition: all 0.3s;
+        }
+        .quiz-option:hover { border-color: #007adf; background: #e6f2ff; }
+        .feedback { margin-top: 15px; font-weight: 600; height: 20px; }
+        .correct { color: #28a745; }
+        .incorrect { color: #dc3545; }
+        
+        .icon-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .icon {
+            font-size: 40px;
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .icon:hover { transform: scale(1.1); }
+    </style>
+</head>
+<body>
+
+    <div id="presentation-container">
+        <div id="slide-counter" class="slide-counter">1 / 6</div>
+
+        <div class="slide slide-1 active" id="slide-1">
+            <h1>AI: The Secret Code</h1>
+            <p class="subtitle">That's Already Running Your World</p>
+        </div>
+
+        <div class="slide slide-2" id="slide-2">
+            <h2>The Big Surprise! 🤔</h2>
+            <p>Early on, people thought that for a computer to beat a human at chess, it would need to be a creative genius.</p>
+            <p>They were wrong! It turned out a powerful but very specialized program could win. It was great at chess, but it couldn't even tell you if a cat is a cat.</p>
+            <div class="quiz-container">
+                <p><strong>This chess program was a master at one skill. What do we call this?</strong></p>
+                <div id="q1-options">
+                    <span class="quiz-option" onclick="showFeedback('q1', 'incorrect')">General Intelligence</span>
+                    <span class="quiz-option" onclick="showFeedback('q1', 'correct')">Narrow Intelligence</span>
+                </div>
+                <div id="q1-feedback" class="feedback"></div>
+            </div>
+        </div>
+
+        <div class="slide slide-3" id="slide-3">
+            <h2>"Easy" is Actually SUPER Hard! 🤯</h2>
+            <p>Here's the funny part. AI aced "thinking" tasks like chess, but failed at what humans do "without thinking."</p>
+            <p>Recognizing your friend's face in a crowd, understanding a joke, or just walking around a room are incredibly difficult for computers!</p>
+            <div class="quiz-container">
+                <p><strong>Which of these is harder for a computer?</strong></p>
+                <div id="q2-options">
+                    <span class="quiz-option" onclick="showFeedback('q2', 'incorrect')">Calculate 2,583 x 7,149</span>
+                    <span class="quiz-option" onclick="showFeedback('q2', 'correct')">Understand the sentence "The fish is ready to eat."</span>
+                </div>
+                <div id="q2-feedback" class="feedback"></div>
+            </div>
+        </div>
+        
+        <div class="slide slide-4" id="slide-4">
+            <h2>Narrow AI is EVERYWHERE! 🌍</h2>
+            <p>Because "Narrow AI" is so good at specific jobs, we've built it into everything. Most of the time, we don't even call it AI anymore!</p>
+            <p><strong>Click the icons below! Which of these do you think use AI?</strong></p>
+            <div class="icon-grid">
+                <span class="icon" onclick="showFeedback('q3', 'correct', 'Maps uses AI to find the best routes!')">🗺️</span>
+                <span class="icon" onclick="showFeedback('q3', 'correct', 'Your email uses AI to filter out spam!')">📧</span>
+                <span class="icon" onclick="showFeedback('q3', 'correct', 'Recommends new songs and shows!')">🎧</span>
+                <span class="icon" onclick="showFeedback('q3', 'correct', 'Voice assistants are a form of AI!')">🎤</span>
+                <span class="icon" onclick="showFeedback('q3', 'correct', 'The world\'s biggest AI system!')">🔍</span>
+            </div>
+            <div id="q3-feedback" class="feedback">That's right, they ALL do!</div>
+        </div>
+
+        <div class="slide slide-5" id="slide-5">
+            <h2>The 2 Types of AI: Specialist vs. Genius</h2>
+            <p>So, it's really important to know the difference.</p>
+            <p><strong>Narrow AI (What we have now):</strong> A master of ONE job. Like a calculator that's amazing at math but can't do anything else. All the AI you use today is Narrow AI.</p>
+            <p><strong>Artificial General Intelligence (AGI):</strong> The original dream. An AI that can learn, reason, and be creative about ANYTHING, just like a human. This does not exist yet!</p>
+             <div class="quiz-container">
+                <p><strong>Is the AI that suggests YouTube videos Narrow AI or AGI?</strong></p>
+                <div id="q4-options">
+                    <span class="quiz-option" onclick="showFeedback('q4', 'correct')">Narrow AI</span>
+                    <span class="quiz-option" onclick="showFeedback('q4', 'incorrect')">AGI</span>
+                </div>
+                <div id="q4-feedback" class="feedback"></div>
+            </div>
+        </div>
+        
+        <div class="slide slide-6" id="slide-6">
+            <h2>So, What's Next? 🚀</h2>
+            <p>For a long time, people had a very complicated model of the universe with the Earth at the center. Then Copernicus came along with a simpler, better idea (the Sun at the center).</p>
+            <p>Maybe, for the really hard problems in AI, we're just waiting for a new, simpler idea to unlock the door to true AGI.</p>
+            <p><strong>What kind of problem would you want a true AGI to solve first?</strong></p>
+        </div>
+
+        <div class="navigation">
+            <button id="prev-btn" class="nav-button" onclick="changeSlide(-1)">Previous</button>
+            <button id="next-btn" class="nav-button" onclick="changeSlide(1)">Next</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 6;
+        const slideCounter = document.getElementById('slide-counter');
+
+        function showSlide(n) {
+            const slides = document.querySelectorAll('.slide');
+            slides.forEach(slide => slide.classList.remove('active'));
+            document.getElementById(`slide-${n}`).classList.add('active');
+            slideCounter.textContent = `${n} / ${totalSlides}`;
+            
+            document.getElementById('prev-btn').disabled = n === 1;
+            document.getElementById('next-btn').disabled = n === totalSlides;
+        }
+
+        function changeSlide(direction) {
+            currentSlide += direction;
+            if (currentSlide > totalSlides) currentSlide = totalSlides;
+            if (currentSlide < 1) currentSlide = 1;
+            showSlide(currentSlide);
+        }
+
+        function showFeedback(questionId, answer, customMessage = "") {
+            const feedbackEl = document.getElementById(`${questionId}-feedback`);
+            const options = document.getElementById(`${questionId}-options`);
+            
+            if (questionId === 'q3') {
+                feedbackEl.textContent = customMessage;
+                feedbackEl.className = 'feedback correct';
+                return;
+            }
+            
+            if (answer === 'correct') {
+                feedbackEl.textContent = "Exactly! Great job!";
+                feedbackEl.className = 'feedback correct';
+            } else {
+                feedbackEl.textContent = "Good thought, but not quite. Try the other one!";
+                feedbackEl.className = 'feedback incorrect';
+            }
+            
+            if (options) {
+                options.querySelectorAll('.quiz-option').forEach(opt => opt.style.pointerEvents = 'none');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            showSlide(currentSlide);
+        });
+    </script>
+</body>
+</html>

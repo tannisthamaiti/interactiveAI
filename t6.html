@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF--8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Inspired by Nature</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f0f4f8; /* Light blue-gray background */
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 25px 35px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: #1e88e5; /* A vibrant blue */
+            border-bottom: 2px solid #90caf9; /* Lighter blue border */
+            padding-bottom: 10px;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #1e88e5;
+        }
+        .slide {
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed #e0e0e0;
+        }
+        .quiz {
+            background-color: #e3f2fd; /* Lightest blue for quiz */
+            padding: 18px;
+            border-radius: 10px;
+            margin-top: 25px;
+            border: 1px solid #bbdefb;
+        }
+        .quiz p {
+            font-weight: bold;
+            color: #0d47a1; /* Darker text for question */
+        }
+        button {
+            background-color: #1e88e5;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 17px;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #1565c0;
+        }
+        .feedback {
+            font-weight: bold;
+            margin-top: 10px;
+            font-size: 1.1em;
+        }
+        .analogy {
+            background-color: #f7f9fc;
+            border-left: 5px solid #42a5f5; /* Accent border */
+            padding: 15px;
+            margin: 20px 0;
+            font-style: italic;
+            border-radius: 8px;
+            color: #4a4a4a;
+        }
+        .concept-list li {
+            margin-bottom: 10px;
+        }
+        a {
+            color: #1565c0;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>AI Inspired by Nature 🧠🐜🧬</h1>
+    <p>Nature is the ultimate innovator! Let's explore how AI learns from the brain, evolution, and even tiny insects to solve complex problems.</p>
+
+    <div class="slide">
+        <h2>Slide 1: The Brain-Inspired Neuron (The Perceptron)</h2>
+        <p>The first and most famous inspiration for AI is the human brain. AI creators built a simple mathematical model of a brain cell, called a <strong>Perceptron</strong>.</p>
+        
+        <h3>How it Mimics the Brain:</h3>
+        <ul class="concept-list">
+            <li><strong>Inputs (like Dendrites):</strong> Receives information.</li>
+            <li><strong>Weights (like Synapses):</strong> Decides how important each piece of info is.</li>
+            <li><strong>Summation & Activation (like Cell Body & Axon):</strong> Adds up the info and "fires" with a decision if the signal is strong enough.</li>
+        </ul>
+        <p>This simple idea is the building block for the massive "Deep Learning" networks we see today, which use many layers of these neurons to recognize faces, understand language, and more!</p>
+        
+        <div class="quiz">
+            <p>🤔 Quiz Time!</p>
+            <p>In a Perceptron, what do "weights" represent?</p>
+            <input type="radio" name="q1" value="a"> The final decision<br>
+            <input type="radio" name="q1" value="b" id="correct1"> How important each input is<br>
+            <input type="radio" name="q1" value="c"> The number of inputs<br>
+            <button onclick="checkQuiz(1)">Check Answer</button>
+            <p id="feedback1" class="feedback"></p>
+        </div>
+    </div>
+
+    <div class="slide">
+        <h2>Slide 2: Evolution in a Computer (Genetic Algorithms) 🧬</h2>
+        <p>Nature uses evolution to create amazing creatures. <strong>Genetic Algorithms (GAs)</strong> use the same idea to "evolve" the best solutions to problems!</p>
+        
+        <div class="analogy">
+            <p><strong>Analogy: Breeding Fast Racehorses 🐎</strong></p>
+            <p>Imagine you want to breed the fastest horse. You'd start with a group, have them race (**test fitness**), and let the fastest ones have babies (**selection**). The babies would be a mix of their fast parents (**crossover**) with a few random changes (**mutation**). Over many generations, you'd get super-fast horses! GAs do this with computer code to find amazing solutions.</p>
+        </div>
+
+        <h3>The Steps of Evolution:</h3>
+        <ul class="concept-list">
+            <li><strong>Selection:</strong> The best solutions in the current generation are chosen to "reproduce."</li>
+            <li><strong>Crossover:</strong> The chosen solutions are mixed together to create new "offspring" solutions.</li>
+            <li><strong>Mutation:</strong> Small, random changes are introduced to the offspring to create new possibilities.</li>
+        </ul>
+        <p>This is used to design everything from better car parts to the schedules for airlines!</p>
+        
+        <div class="quiz">
+            <p>🤔 Quiz Time!</p>
+            <p>In a Genetic Algorithm, what is the purpose of "mutation"?</p>
+            <input type="radio" name="q2" value="a"> To copy the best solution exactly.<br>
+            <input type="radio" name="q2" value="b"> To mix two parent solutions together.<br>
+            <input type="radio" name="q2" value="c" id="correct2"> To introduce new, random ideas and prevent getting stuck.<br>
+            <button onclick="checkQuiz(2)">Check Answer</button>
+            <p id="feedback2" class="feedback"></p>
+        </div>
+    </div>
+
+    <div class="slide">
+        <h2>Slide 3: Learning from the Crowd (Swarm Intelligence) 🐜</h2>
+        <p>Have you ever seen a colony of ants perfectly find the shortest path to a piece of food? No single ant is a genius, but together, the <strong>swarm</strong> is incredibly smart. This is called <strong>Swarm Intelligence</strong>.</p>
+
+        <h3>Ant Colony Optimization (ACO):</h3>
+        <p>One famous example is <strong>Ant Colony Optimization</strong>. Ants on a shorter path can go back and forth more quickly, so their chemical trail (**pheromone**) gets stronger faster! Soon, all the ants are using the most efficient route.</p>
+        
+        <p>In AI, we use this idea to solve "routing problems," like finding the most efficient way for a delivery truck to visit many cities.</p>
+
+        <div class="quiz">
+            <p>🤔 Quiz Time!</p>
+            <p>In Ant Colony Optimization, how do the "ants" communicate the best path?</p>
+            <input type="radio" name="q3" value="a" id="correct3"> By leaving a strengthening chemical trail (pheromones).<br>
+            <input type="radio" name="q3" value="b"> By talking to each other directly.<br>
+            <input type="radio" name="q3" value="c"> By following a map from the queen ant.<br>
+            <button onclick="checkQuiz(3)">Check Answer</button>
+            <p id="feedback3" class="feedback"></p>
+        </div>
+    </div>
+
+     <div class="slide">
+        <h2>Slide 4: The Body's Defender (Artificial Immune Systems) 🦠</h2>
+        <p>Your body's immune system is an amazing natural defense network. It can tell the difference between your own cells ("self") and dangerous invaders like viruses ("non-self"). <strong>Artificial Immune Systems (AIS)</strong> copy this idea for digital security.</p>
+        
+        <h3>How it Mimics Your Immune System:</h3>
+        <ul class="concept-list">
+            <li><strong>Learning "Self":</strong> First, the AIS learns what normal network traffic or normal files on a computer look like.</li>
+            <li><strong>Detecting "Non-Self":</strong> It then monitors the system. If new data appears that doesn't match the "self" profile, it flags it as a potential threat.</li>
+        </ul>
+        <p>This is extremely useful for things like <strong>computer virus detection</strong> and finding malicious activity on a computer network (**anomaly detection**).</p>
+        
+        <div class="quiz">
+            <p>🤔 Quiz Time!</p>
+            <p>What is the main task of an Artificial Immune System in cybersecurity?</p>
+            <input type="radio" name="q4" value="a"> To make the computer run faster.<br>
+            <input type="radio" name="q4" value="b" id="correct4"> To distinguish between normal ("self") and potentially harmful ("non-self") data.<br>
+            <input type="radio" name="q4" value="c"> To store more files on the computer.<br>
+            <button onclick="checkQuiz(4)">Check Answer</button>
+            <p id="feedback4" class="feedback"></p>
+        </div>
+    </div>
+    
+    <div class="slide">
+        <h2>Slide 5: Dive Deeper! (Extra Reading) 📚</h2>
+        <p>Curious to learn more? These articles are great next steps to explore the amazing world of bio-inspired AI.</p>
+        
+        <h3>On Brain-Inspired AI (Neural Networks):</h3>
+        <ul>
+            <li><a href="https://www.ibm.com/cloud/learn/neural-networks" target="_blank">What are Neural Networks?</a> - A clear, high-level overview from IBM.</li>
+        </ul>
+
+        <h3>On Genetic Algorithms:</h3>
+        <ul>
+            <li><a href="https://towardsdatascience.com/introduction-to-genetic-algorithms-including-example-code-e396e98d8bf3" target="_blank">Introduction to Genetic Algorithms</a> - A fantastic explanation with great examples from Towards Data Science.</li>
+        </ul>
+
+        <h3>On Swarm Intelligence:</h3>
+        <ul>
+            <li><a href="https://www.nationalgeographic.com/animals/article/swarm-intelligence-animals-ants-bees" target="_blank">How Swarm Intelligence Works</a> - An article from National Geographic explaining the concept in nature.</li>
+        </ul>
+        
+        <h3>On Artificial Immune Systems:</h3>
+        <ul>
+             <li><a href="https://www.geeksforgeeks.org/artificial-immune-system/" target="_blank">Artificial Immune System</a> - A good technical, but still accessible, introduction from GeeksforGeeks.</li>
+        </ul>
+    </div>
+
+</div>
+
+<script>
+    function checkQuiz(questionNumber) {
+        const correctId = 'correct' + questionNumber;
+        const feedbackId = 'feedback' + questionNumber;
+
+        const correctRadioButton = document.getElementById(correctId);
+        const feedbackElement = document.getElementById(feedbackId);
+
+        if (correctRadioButton && correctRadioButton.checked) {
+            feedbackElement.textContent = "✅ Correct! Fantastic!";
+            feedbackElement.style.color = "green";
+        } else {
+            feedbackElement.textContent = "❌ Not quite, give it another shot!";
+            feedbackElement.style.color = "red";
+        }
+    }
+</script>
+
+</body>
+</html>

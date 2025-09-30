@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A.I. Advanced Topics</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: #00796b; /* A different theme color */
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+        .slide {
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        .quiz {
+            background-color: #e0f2f1; /* Lighter shade of theme color */
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .quiz p {
+            font-weight: bold;
+        }
+        button {
+            background-color: #00796b;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #004d40;
+        }
+        .feedback {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .analogy {
+            background-color: #fafafa;
+            border-left: 4px solid #00796b;
+            padding: 10px;
+            margin: 15px 0;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>A.I. Deep Dive 🔬</h1>
+    <p>Let's explore two amazing topics: how we can connect brains to computers, and the clever way AI learns!</p>
+
+    <div class="slide">
+        <h2>Part 1: Connecting Brains to Computers (BCI) 🧠⚡💻</h2>
+        <p>A <strong>Brain-Computer Interface (BCI)</strong> is a technology that creates a direct communication pathway between a brain and a device, like a computer or a robotic arm. It's like turning your thoughts into commands!</p>
+        
+        <p><strong>How does it work?</strong> The simplest way is by using sensors on your head to listen to the tiny electrical signals your brain cells (neurons) create when you think. This is called an <strong>Electroencephalogram (EEG)</strong>.</p>
+        
+        
+        <p>An AI algorithm then learns to recognize patterns in these signals. For example, it might learn that a certain brain signal pattern means "move your arm left."</p>
+
+        <p><strong>What's the goal?</strong>
+            <ul>
+                <li><strong>Restore:</strong> Helping people who are paralyzed to move robotic limbs or type on a screen just by thinking.</li>
+                <li><strong>Enhance:</strong> In the future, it might allow anyone to control devices or even play games with their mind!</li>
+            </ul>
+        </p>
+        
+        <div class="quiz">
+            <p>🤔 Quiz Time!</p>
+            <p>What is the main goal of a BCI?</p>
+            <input type="radio" name="q1" value="a"> To read people's secret thoughts<br>
+            <input type="radio" name="q1" value="b" id="correct1"> To turn brain signals into commands for devices<br>
+            <input type="radio" name="q1" value="c"> To replace computers with brains<br>
+            <button onclick="checkQuiz(1)">Check Answer</button>
+            <p id="feedback1" class="feedback"></p>
+        </div>
+    </div>
+
+    <div class="slide">
+        <h2>Part 2: The Evolution of Learning (Gradient Descent) 📉</h2>
+        <p>We mentioned that AI learns from mistakes (using backpropagation). The mathematical engine that drives this learning is called <strong>Gradient Descent</strong>.</p>
+
+        <div class="analogy">
+            <p><strong>Analogy: Walking Down a Mountain Blindfolded</strong></p>
+            <p>Imagine you're on a mountain and want to get to the lowest point in the valley, but it's foggy and you're blindfolded. What do you do? You feel the ground around your feet and take a step in whichever direction goes downhill the most. You repeat this over and over until you can't go any further down. That's exactly what Gradient Descent does! The "lowest point" is the point of smallest error.</p>
+        </div>
+        
+
+        <p>This process has gotten smarter over time:</p>
+        <ul>
+            <li><strong>Batch Gradient Descent (The Slow & Steady Way):</strong> The AI looks at *all* of its mistakes from *all* the data before taking a single step downhill. It's accurate but extremely slow, like planning a year-long hike before taking the first step.</li>
+            <li><strong>Stochastic Gradient Descent (SGD) (The Fast & Bumpy Way):</strong> The AI takes a step after looking at just *one* mistake. It's much faster but the path is very wobbly and uncertain, like zigzagging down the mountain.</li>
+            <li><strong>Mini-Batch Gradient Descent (The Best of Both Worlds):</strong> The AI looks at a small group (a "mini-batch") of mistakes before taking a step. It's a perfect balance—much faster than the slow way and much more stable than the bumpy way. This is what almost all modern AI uses!</li>
+        </ul>
+
+        <div class="quiz">
+            <p>🤔 Quiz Time!</p>
+            <p>Which type of Gradient Descent is the most popular in modern AI because it offers a good balance of speed and stability?</p>
+            <input type="radio" name="q2" value="a"> Batch Gradient Descent<br>
+            <input type="radio" name="q2" value="b"> Stochastic Gradient Descent (SGD)<br>
+            <input type="radio" name="q2" value="c" id="correct2"> Mini-Batch Gradient Descent<br>
+            <button onclick="checkQuiz(2)">Check Answer</button>
+            <p id="feedback2" class="feedback"></p>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function checkQuiz(questionNumber) {
+        const correctId = 'correct' + questionNumber;
+        const feedbackId = 'feedback' + questionNumber;
+
+        const correctRadioButton = document.getElementById(correctId);
+        const feedbackElement = document.getElementById(feedbackId);
+
+        if (correctRadioButton.checked) {
+            feedbackElement.textContent = "✅ Correct! You're a pro!";
+            feedbackElement.style.color = "green";
+        } else {
+            feedbackElement.textContent = "❌ Not quite, have another look!";
+            feedbackElement.style.color = "red";
+        }
+    }
+</script>
+
+</body>
+</html>
