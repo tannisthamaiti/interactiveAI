@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Outlier Explorer! 🚀</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: #005a9c;
+            text-align: center;
+        }
+        .controls {
+            background-color: #e6f3ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .control-item {
+            margin: 10px;
+            font-size: 16px;
+        }
+        label {
+            font-weight: bold;
+        }
+        input, select {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+        .results {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #005a9c;
+        }
+        #plotDiv {
+            width: 100%;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🚀 Welcome to the Outlier Explorer! 🚀</h1>
+    <p>An outlier is a number that's very different from others in a group. Think of a basketball player in a class of 5th graders! Let's try to find some.</p>
+
+    <div class="controls">
+        <h2>Let's Play with Data!</h2>
+        <div class="control-item">
+            <label for="dataset">1. Pick a dataset: </label>
+            <select id="dataset" onchange="update()">
+                <option value="normal">Class Test Scores (Bell Curve)</option>
+                <option value="uniform">Rolling a Dice (Random)</option>
+                <option value="exponential">Waiting for a Bus (Skewed)</option>
+            </select>
+        </div>
+        <div class="control-item">
+            <label for="outlier">2. Add a wacky number (an outlier!): </label>
+            <input type="number" id="outlier" value="150" oninput="update()">
+        </div>
+    </div>
+
+    <div id="plotDiv"></div>
+
+    <div class="results">
+        <h2>The Math Detective's Report 🕵️</h2>
+        <p id="iqr-report"></p>
+        <p id="outlier-report"></p>
+    </div>
+
+    <script>
+        // --- Main function to update everything ---
+        function update() {
+            // Get user choices
+            const datasetType = document.getElementById('dataset').value;
+            const outlierValue = parseFloat(document.getElementById('outlier').value);
+
+            // Generate the base data
+            let baseData = [];
+            const dataSize = 200; // Let's create 200 data points
+
+            if (datasetType === 'normal') {
+                // Like test scores, most are in the middle
+                baseData = generateNormalData(50, 10, dataSize);
+            } else if (datasetType === 'uniform') {
+                // Like rolling a dice, any number is equally likely
+                baseData = generateUniformData(1, 100, dataSize);
+            } else if (datasetType === 'exponential') {
+                // Most are small, with a few large ones (like waiting times)
+                baseData = generateExponentialData(15, dataSize);
+            }
+
+            // Add the user's wacky number to the data!
+            let dataWithOutlier = [...baseData]; // Make a copy
+            if (!isNaN(outlierValue)) {
+                dataWithOutlier.push(outlierValue);
+            }
+
+            // --- Do the Math Detective work (IQR method) ---
+            dataWithOutlier.sort((a, b) => a - b); // Sort data to find percentiles
+            const Q1 = getPercentile(dataWithOutlier, 25);
+            const Q3 = getPercentile(dataWithOutlier, 75);
+            const IQR = Q3 - Q1;
+            const lowerFence = Q1 - 1.5 * IQR;
+            const upperFence = Q3 + 1.5 * IQR;
+
+            // Find the outliers!
+            const foundOutliers = dataWithOutlier.filter(d => d < lowerFence || d > upperFence);
+
+            // --- Update the reports on the page ---
+            document.getElementById('iqr-report').innerHTML = 
+                `The 'treasure box' (middle 50% of data) is between <b>${Q1.toFixed(2)}</b> and <b>${Q3.toFixed(2)}</b>. <br>` +
+                `The 'fence' is built from <b>${lowerFence.toFixed(2)}</b> to <b>${upperFence.toFixed(2)}</b>. Anything outside is an outlier!`;
+
+            if (foundOutliers.length > 0) {
+                document.getElementById('outlier-report').innerHTML = `✅ We found an outlier! The wacky number is: <b>${foundOutliers.join(', ')}</b>`;
+            } else {
+                 document.getElementById('outlier-report').innerHTML = `🤔 No outliers found this time. Your number fits in with the group!`;
+            }
+
+            // --- Draw the Box Plot ---
+            const trace = {
+                x: dataWithOutlier,
+                type: 'box',
+                name: 'Our Data',
+                marker: { color: '#005a9c' },
+                boxpoints: 'suspectedoutliers' // This tells Plotly to show the outliers
+            };
+
+            const layout = {
+                title: 'A Picture of Our Data (Box Plot)',
+                xaxis: { title: 'Value' }
+            };
+
+            Plotly.newPlot('plotDiv', [trace], layout);
+        }
+
+        // --- Helper functions for generating data ---
+        // These use math to create the different data shapes
+        function generateNormalData(mean, std, size) {
+            let data = [];
+            for (let i = 0; i < size; i++) {
+                // Box-Muller transform to get a normal distribution from random numbers
+                let u = 0, v = 0;
+                while(u === 0) u = Math.random();
+                while(v === 0) v = Math.random();
+                let num = Math.sqrt( -2.0 * Math.log( u ) ) * Math.cos( 2.0 * Math.PI * v );
+                data.push(num * std + mean);
+            }
+            return data;
+        }
+
+        function generateUniformData(min, max, size) {
+            let data = [];
+            for (let i = 0; i < size; i++) {
+                data.push(Math.random() * (max - min) + min);
+            }
+            return data;
+        }
+
+        function generateExponentialData(scale, size) {
+            let data = [];
+            for (let i = 0; i < size; i++) {
+                data.push(-Math.log(1.0 - Math.random()) * scale);
+            }
+            return data;
+        }
+
+        function getPercentile(sortedData, percentile) {
+            const index = (percentile / 100) * (sortedData.length - 1);
+            const lower = Math.floor(index);
+            const upper = lower + 1;
+            const weight = index - lower;
+            if (upper >= sortedData.length) return sortedData[lower];
+            return sortedData[lower] * (1 - weight) + sortedData[upper] * weight;
+        }
+        
+        // --- Run the update function once when the page loads ---
+        update();
+
+    </script>
+</body>
+</html>
