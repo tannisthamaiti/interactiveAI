@@ -30,154 +30,149 @@
         h2 {
             font-size: 2em;
             color: #1e3a5f;
+            text-align: left;
             margin-top: 50px;
             margin-bottom: 20px;
+            border-bottom: 2px solid #e0e6ed;
+            padding-bottom: 10px;
         }
         p.subtitle {
             font-size: 1.2em;
             color: #555;
-            max-width: 650px;
+            max-width: 700px;
             margin: 0 auto;
         }
         .deck-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 25px;
             text-align: left;
         }
         .card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
             padding: 25px;
             text-decoration: none;
-            color: inherit;
+            color: #333;
             display: flex;
             flex-direction: column;
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border-top: 4px solid #ccc;
         }
         .card:hover {
-            transform: translateY(-7px);
-            box-shadow: 0 8px 25px rgba(30, 58, 95, 0.15);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
         }
         .card h3 {
             margin-top: 0;
-            color: #1e88e5;
             font-size: 1.4em;
+            color: #1e3a5f;
         }
         .card p {
-            font-size: 0.95em;
-            color: #666;
             flex-grow: 1;
+            font-size: 0.95em;
+            color: #555;
         }
         .card-footer {
-            margin-top: 20px;
-            font-weight: bold;
-            color: #1e88e5;
-            align-self: flex-end;
+            margin-top: 15px;
+            font-weight: 600;
+            color: #007bff;
         }
-        /* Regression card color */
-        .card.regression {
-            border-top: 5px solid #d9534f;
-        }
-        .card.regression h3, .card.regression .card-footer {
-            color: #d9534f;
-        }
-         /* Video card color */
-        .card.video {
-            border-top: 5px solid #28a745;
-        }
-        .card.video h3, .card.video .card-footer {
-            color: #28a745;
-        }
+        
+        /* Specific card colors */
+        .card.intro { border-top-color: #007bff; }
+        .card.intro .card-footer { color: #007bff; }
+        
+        .card.data { border-top-color: #28a745; }
+        .card.data .card-footer { color: #28a745; }
+        
+        .card.regression { border-top-color: #fd7e14; }
+        .card.regression .card-footer { color: #fd7e14; }
+        
+        .card.outlier { border-top-color: #dc3545; }
+        .card.outlier .card-footer { color: #dc3545; }
+
+        .card.video { border-top-color: #6f42c1; }
+        .card.video .card-footer { color: #6f42c1; }
+
+        /* === NEW STYLE FOR YOUR PROJECTS LINK === */
+        .card.projects { border-top-color: #ff6f61; }
+        .card.projects .card-footer { color: #ff6f61; }
+
     </style>
 </head>
 <body>
+    <div class="container">
+        <header>
+            <h1>AI Learning Hub</h1>
+            <p class="subtitle">Welcome! This is your starting point for learning about Artificial Intelligence and exploring hands-on data analysis projects.</p>
+        </header>
 
-<div class="container">
-    <header>
-        <h1>An Interactive Journey into AI</h1>
-        <p class="subtitle">A collection of interactive slide decks for learning about the past, present, and future of Artificial Intelligence. Click on a topic to begin!</p>
-    </header>
+        <h2>Learn the Basics 📚</h2>
+        <div class="deck-grid">
+            <a href="t1.html" class="card intro">
+                <h3>Lesson 1: What is AI?</h3>
+                <p>Start your journey by understanding what Artificial Intelligence really is, its different types, and why it's so important today.</p>
+                <div class="card-footer">Start Learning &rarr;</div>
+            </a>
+            <a href="t2.html" class="card intro">
+                <h3>Lesson 2: Machine Learning</h3>
+                <p>Dive into Machine Learning, the engine that powers most of today's AI. Learn how machines can learn from data without being explicitly programmed.</p>
+                <div class="card-footer">Start Learning &rarr;</div>
+            </a>
+            <a href="t3.html" class="card intro">
+                <h3>Lesson 3: Deep Learning</h3>
+                <p>Discover the world of neural networks and Deep Learning, the technology behind self-driving cars and voice assistants.</p>
+                <div class="card-footer">Start Learning &rarr;</div>
+            </a>
+            <a href="t4.html" class="card data">
+                <h3>Lesson 4: Understanding Data</h3>
+                <p>Data is the fuel for AI. Learn about the basic statistical concepts of Mean, Median, and Mode to understand and summarize data.</p>
+                <div class="card-footer">Explore Data &rarr;</div>
+            </a>
+            <a href="t5.html" class="card data">
+                <h3>Lesson 5: Data Distribution</h3>
+                <p>Explore how data is spread out using concepts like the Gaussian (Normal) Distribution, often called the "Bell Curve."</p>
+                <div class="card-footer">See the Spread &rarr;</div>
+            </a>
+            <a href="t6.html" class="card data">
+                <h3>Lesson 6: Data Splitting</h3>
+                <p>Learn the most important rule in AI model building: how and why we split data into training, validation, and test sets.</p>
+                <div class="card-footer">Split the Data &rarr;</div>
+            </a>
+            <a href="t7.html" class="card regression">
+                <h3>Lesson 7: Predicting the Future!</h3>
+                <p>Learn about Regression Analysis, a technique AI uses to find patterns in data to predict things like house prices or test scores.</p>
+                <div class="card-footer">Start Predicting &rarr;</div>
+            </a>
+            <a href="t8.html" class="card outlier">
+                <h3>Lesson 8: Outlier Exploration</h3>
+                <p>An outlier is a number that's very different from others in a group. Learn how to find these special data points using box plots.</p>
+                <div class="card-footer">Find Outliers &rarr;</div>
+            </a>
+            
+            <a href="h7.html" class="card projects">
+                <h3>Machine Learning Projects</h3>
+                <p>Explore a collection of data analysis projects, including the Linear Regression Tutorial and the Medical Insurance Cost Analysis report.</p>
+                <div class="card-footer">View Projects &rarr;</div>
+            </a>
+            </div>
 
-    <h2>Interactive Lessons</h2>
-    <div class="deck-grid">
-        <a href="t1.html" class="card">
-            <h3>Lesson 1: AI in Your World</h3>
-            <p>Discover the difference between the AI in movies (AGI) and the "Narrow AI" we use every day in apps, games, and on the web.</p>
-            <div class="card-footer">Start Here &rarr;</div>
-        </a>
-
-        <a href="t3.html" class="card">
-            <h3>Lesson 2: A Brief History of AI</h3>
-            <p>Travel from the 1950s to 2015, meeting key figures like Alan Turing and witnessing breakthrough moments like AlexNet.</p>
-            <div class="card-footer">Explore the Timeline &rarr;</div>
-        </a>
-        
-        <a href="t5.html" class="card">
-            <h3>Lesson 3: How AI "Thinks"</h3>
-            <p>See how biological neurons inspired the first artificial neuron. Features an interactive demo to see one make decisions!</p>
-            <div class="card-footer">See the Building Blocks &rarr;</div>
-        </a>
-
-        <a href="t6.html" class="card">
-            <h3>Lesson 4: Nature's Other Ideas</h3>
-            <p>AI doesn't just learn from brains! Explore how evolution, ant colonies, and even our immune systems inspire powerful AI techniques.</p>
-            <div class="card-footer">Discover Bio-Inspired AI &rarr;</div>
-        </a>
-        
-        <a href="t4.html" class="card">
-            <h3>Lesson 5: Advanced AI Topics</h3>
-            <p>Go a step further by learning about Brain-Computer Interfaces (BCIs) and the "Gradient Descent" strategies that allow AIs to learn so efficiently.</p>
-            <div class="card-footer">Go Deeper &rarr;</div>
-        </a>
-
-        <a href="t2.html" class="card">
-            <h3>Lesson 6: The Future of AI</h3>
-            <p>When will AI become as smart as a human? This presentation explores the different predictions from top AI researchers around the world.</p>
-            <div class="card-footer">Look Ahead &rarr;</div>
-        </a>
-        
-        <a href="h1.html" class="card">
-            <h3>NumPy Built-in Functions Adventure</h3>
-            <p>Explore some of the most useful NumPy functions for data analysis, including max(), min(), mean(), sum(), size, median(), mode(), and std(). Test your knowledge with interactive questions and challenges.</p>
-            <div class="card-footer">View Details &rarr;</div>
-        </a>
-
-        <a href="t7.html" class="card regression">
-            <h3>Lesson 7: Predicting the Future!</h3>
-            <p>Learn about Regression Analysis, a technique AI uses to find patterns in data to predict things like house prices or test scores.</p>
-            <div class="card-footer">Start Predicting &rarr;</div>
-        </a>
-        <a href="t8.html" class="Outlier Exploration">
-            <h3>Lesson 8: Outlier</h3>
-            <p>An outlier is a number that's very different from others in a group</p>
-            <div class="card-footer">Start Learning &rarr;</div>
-        </a>
+        <h2>Recommended Videos 🎬</h2>
+        <div class="deck-grid">
+            <a href="https://www.youtube.com/watch?v=WXuK6gekU1Y" target="_blank" class="card video">
+                <h3>AlphaGo - The Movie</h3>
+                <p>This award-winning documentary follows the DeepMind team as they build an AI to take on the world's best Go player. It's an exciting story about a huge moment in AI history!</p>
+                <div class="card-footer">Watch on YouTube &rarr;</div>
+            </a>
+    
+            <a href="https://www.youtube.com/watch?v=jMW8_YVFgzY" target="_blank" class="card video">
+                <h3>I am AI</h3>
+                <p>A short, beautifully animated video that explains what AI is, how it learns, and how it's already a part of our daily lives in ways you might not expect.</p>
+                <div class="card-footer">Watch on YouTube &rarr;</div>
+            </a>
+        </div>
     </div>
-
-    <h2>Recommended Videos 🎬</h2>
-    <div class="deck-grid">
-        <a href="https://www.youtube.com/watch?v=WXuK6gekU1Y" target="_blank" class="card video">
-            <h3>AlphaGo - The Movie</h3>
-            <p>This award-winning documentary follows the DeepMind team as they build an AI to take on the world's best Go player. It's an exciting story about a huge moment in AI history!</p>
-            <div class="card-footer">Watch on YouTube &rarr;</div>
-        </a>
-
-        <a href="https://www.youtube.com/watch?v=jMW8_YVFgzY" target="_blank" class="card video">
-            <h3>I am AI</h3>
-            <p>A short, beautifully animated video that explains what AI is, how it learns, and how it's already a part of our daily lives in ways you might not expect.</p>
-            <div class="card-footer">Watch on YouTube &rarr;</div>
-        </a>
-        <a href="https://www.youtube.com/watch?v=VAzKqh00g3c" target="_blank" class="card video">
-            <h3>Our latest artificial intelligence reports</h3>
-            <p>From April, a look at what's next for AI at Google DeepMind</p>
-            <div class="card-footer">Watch on YouTube &rarr;</div>
-        </a>
-    </div>
-
-</div>
-
 </body>
 </html>
-

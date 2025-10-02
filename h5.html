@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linear Regression Tutorial</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: #005a9c;
+            text-align: center;
+        }
+        .concept-container, .code-container, .quiz-container {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .concept-container {
+            background-color: #e9f7eb;
+            border-left: 5px solid #28a745;
+        }
+        .concept-container h2 {
+            margin-top: 0;
+            color: #155724;
+        }
+        .code-container {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            border-left: 5px solid #007bff;
+        }
+        .code-container h2 {
+            color: #f8f8f2;
+        }
+        .code-container pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.95em;
+        }
+        .question {
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .options label {
+            display: block;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .options label:hover {
+            background-color: #e9eff5;
+        }
+        button {
+            display: block;
+            margin: 15px 0 0 0;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 10px;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .correct { color: #28a745; background-color: #e9f7eb; }
+        .incorrect { color: #dc3545; background-color: #fdeaea; }
+    </style>
+</head>
+<body>
+
+    <h1>✨ Linear Regression Tutorial ✨</h1>
+    
+    <div class="concept-container">
+        <h2>🤔 What is this all about?</h2>
+        <p>Imagine you're a detective looking for clues. You have a bunch of data points, like how many hours your friends study and the test scores they get. Linear regression is your special detective tool for finding a hidden pattern!</p>
+        <p>It helps you draw a <strong>single straight line</strong> that cuts right through the middle of all your data points. This is called the <strong>"line of best fit."</strong> Once you have this magic line, you can make predictions!</p>
+        
+        <p>This special line has two important parts:</p>
+        <ul>
+            <li><strong>Slope:</strong> This is the 'steepness' of the line. It tells you how much your prediction goes up (or down) for every step you take. For example, a slope of 8 means "for every 1 extra hour you study, your score is predicted to go up by 8 points."</li>
+            <li><strong>Intercept:</strong> This is the 'starting point.' It's the value where the line hits the vertical axis (when the horizontal value is zero). For example, an intercept of 42 means "if you studied for 0 hours, your predicted score would be 42."</li>
+        </ul>
+    </div>
+    
+    <div class="code-container">
+        <h2>🐍 The Python Code</h2>
+        <p>Here is the Python code to perform the linear regression we talked about. You can run this in an environment like Google Colab.</p>
+        <pre><code># Step 1: Import the tools we need
+import numpy as np
+from scipy import stats
+import matplotlib.pyplot as plt
+
+# Step 2: Create our dataset
+# x-axis: Hours Studied
+study_hours = np.array([2.5, 5.1, 3.2, 1.5, 4.8, 6.2, 0.5, 3.8])
+
+# y-axis: Exam Score
+exam_scores = np.array([65, 82, 70, 50, 88, 92, 45, 78])
+
+# Step 3: Use SciPy to find the magic line of best fit! 🧙‍♂️
+slope, intercept, r, p, std_err = stats.linregress(study_hours, exam_scores)
+
+# Let's see what we got!
+print(f"📈 The slope is: {slope:.2f}")
+print(f"🎯 The intercept is: {intercept:.2f}")
+
+# Step 4: Make a prediction!
+# What's the predicted score for 4.5 hours of study?
+# Use the formula: y = mx + c
+hours_to_predict = 4.5
+predicted_score = slope * hours_to_predict + intercept
+print(f"\n🔮 Predicted score for {hours_to_predict} hours: {predicted_score:.2f}")
+
+# Step 5: Draw a picture to see our line!
+def my_regression_line(x):
+  return slope * x + intercept
+
+line_values = my_regression_line(study_hours)
+
+plt.scatter(study_hours, exam_scores, label='Original Data Points')
+plt.plot(study_hours, line_values, color='red', label='Line of Best Fit')
+plt.scatter(hours_to_predict, predicted_score, color='green', s=100, zorder=5, label=f'Prediction for {hours_to_predict} hrs')
+
+plt.title('Study Hours vs. Exam Score')
+plt.xlabel('Hours Studied')
+plt.ylabel('Exam Score')
+plt.legend()
+plt.grid(True)
+plt.show()
+</code></pre>
+    </div>
+
+    <h2 style="margin-top: 40px;">Ready? Let's check your knowledge!</h2>
+
+    <div class="quiz-container">
+        <p class="question">1. What is the main goal of linear regression?</p>
+        <div class="options">
+            <label><input type="radio" name="q1" value="a"> A) To calculate the average (mean) of the scores.</label>
+            <label><input type="radio" name="q1" value="b"> B) To find a straight line that best fits the data points so we can make predictions.</label>
+            <label><input type="radio" name="q1" value="c"> C) To sort the data from lowest to highest.</label>
+        </div>
+        <button onclick="checkQuiz1()">Check Answer</button>
+        <p id="result1" class="result"></p>
+    </div>
+
+    <div class="quiz-container">
+        <p class="question">2. In our example, the "line of best fit" shows the relationship between...</p>
+        <div class="options">
+            <label><input type="radio" name="q2" value="a"> A) The student's name and their score.</label>
+            <label><input type="radio" name="q2" value="b"> B) The hours studied and the exam score.</label>
+            <label><input type="radio" name="q2" value="c"> C) The easiest and hardest questions on the exam.</label>
+        </div>
+        <button onclick="checkQuiz2()">Check Answer</button>
+        <p id="result2" class="result"></p>
+    </div>
+
+    <div class="quiz-container">
+        <p class="question">3. Imagine the <strong>slope</strong> of the line is 8. What does this mean?</p>
+        <div class="options">
+            <label><input type="radio" name="q3" value="a"> A) For every extra hour of study, your score is predicted to go up by 8 points.</label>
+            <label><input type="radio" name="q3" value="b"> B) The highest possible score on the test is 8.</label>
+            <label><input type="radio" name="q3" value="c"> C) You need to study for 8 hours to pass.</label>
+        </div>
+        <button onclick="checkQuiz3()">Check Answer</button>
+        <p id="result3" class="result"></p>
+    </div>
+
+    <div class="quiz-container">
+        <p class="question">4. Imagine the <strong>intercept</strong> of the line is 42. What does this mean?</p>
+        <div class="options">
+            <label><input type="radio" name="q4" value="a"> A) 42 is the average score of all students.</label>
+            <label><input type="radio" name="q4" value="b"> B) The passing score for the exam is 42.</label>
+            <label><input type="radio" name="q4" value="c"> C) The predicted score for a student who studies for 0 hours is 42.</label>
+        </div>
+        <button onclick="checkQuiz4()">Check Answer</button>
+        <p id="result4" class="result"></p>
+    </div>
+
+    <div class="quiz-container">
+        <p class="question">5. If the slope (m) is 10 and the intercept (c) is 40, what's the predicted score for someone who studies 3 hours? (Hint: score = m * hours + c)</p>
+        <div class="options">
+            <label><input type="radio" name="q5" value="a"> A) 53 (10 + 3 + 40)</label>
+            <label><input type="radio" name="q5" value="b"> B) 120 (10 * 3 * 40)</label>
+            <label><input type="radio" name="q5" value="c"> C) 70 (10 * 3 + 40)</label>
+        </div>
+        <button onclick="checkQuiz5()">Check Answer</button>
+        <p id="result5" class="result"></p>
+    </div>
+
+
+    <script>
+        function checkQuiz(quizNum, correctAnswer) {
+            const resultEl = document.getElementById(`result${quizNum}`);
+            const selected = document.querySelector(`input[name="q${quizNum}"]:checked`);
+
+            if (!selected) {
+                resultEl.textContent = "Please select an answer!";
+                resultEl.className = "result incorrect";
+                return;
+            }
+
+            if (selected.value === correctAnswer) {
+                resultEl.textContent = "Correct! Great job! 🎉";
+                resultEl.className = "result correct";
+            } else {
+                resultEl.textContent = "Not quite, give it another try! 🤔";
+                resultEl.className = "result incorrect";
+            }
+        }
+
+        function checkQuiz1() { checkQuiz(1, 'b'); }
+        function checkQuiz2() { checkQuiz(2, 'b'); }
+        function checkQuiz3() { checkQuiz(3, 'a'); }
+        function checkQuiz4() { checkQuiz(4, 'c'); }
+        function checkQuiz5() { checkQuiz(5, 'c'); }
+    </script>
+</body>
+</html>
