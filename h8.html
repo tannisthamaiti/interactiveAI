@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BCI & Robotics Adventure! 🧠🤖</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: #f0f8ff;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 {
+            color: #005a9c;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            border-bottom: 2px solid #7dd3fc;
+            padding-bottom: 10px;
+        }
+        h2 {
+           border-bottom: 2px solid #7dd3fc;
+           padding-bottom: 10px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin: 20px 0;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        strong {
+            color: #d63384;
+        }
+        .question-box {
+            background-color: #eef7ff;
+            border-left: 5px solid #007bff;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box; /* Important for padding */
+            font-family: inherit;
+            min-height: 80px;
+        }
+        button {
+            display: block;
+            width: 200px;
+            margin: 30px auto 10px;
+            padding: 12px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s;
+        }
+        button:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        /* Style for the responsive video container */
+        .video-container {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        /* The video-placeholder class is no longer needed but kept for completeness */
+        .video-placeholder {
+            background-color: #e9ecef;
+            border: 2px dashed #007bff;
+            padding: 40px 20px;
+            box-sizing: border-box;
+            text-align: center;
+            color: #005a9c;
+            font-weight: bold;
+        }
+        .video-placeholder::before {
+            content: '▶️';
+            font-size: 2em;
+            display: block;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Your Brain's Secret Superpower! 🧠⚡</h1>
+        
+        <p>Ever wished you could control things just by thinking about them, like a Jedi or a character from a sci-fi movie? That's not just fantasy anymore—it's a real field of science called <strong>Brain-Computer Interaction (BCI)</strong>.</p>
+        <p>A BCI is like a translator that allows your brain to talk directly to a computer or a machine, without you having to type, speak, or even move a muscle!</p>
+        
+        <hr>
+
+        <h2>How Does It Work? Listening to Your Brain's Whispers 🎧</h2>
+        <p>Your brain is a bustling city of tiny cells called <strong>neurons</strong>. Every time you think, feel, or move, your neurons fire off tiny electrical signals. A BCI's first job is to listen to this "chatter."</p>
+        
+        <h3>The Brain's Electrical Symphony</h3>
+        <p>The electrical signals from your brain come in different speeds, or frequencies, called <strong>brainwaves</strong>. Think of them like different musical notes in a symphony. Some common ones are:</p>
+        <ul>
+            <li><strong>Beta Waves:</strong> Fast waves for when you are awake, alert, and actively thinking or problem-solving.</li>
+            <li><strong>Alpha Waves:</strong> Slower waves for when you are relaxed and calm, maybe with your eyes closed.</li>
+            <li><strong>Theta Waves:</strong> Even slower waves that appear when you're getting drowsy or are in a light sleep.</li>
+        </ul>
+        <p>A BCI can be trained to recognize the patterns in these waves. For example, it might learn that a certain combination of Beta waves means you're trying to concentrate on moving something forward.</p>
+
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/gvpuOBezW0w?si=T_gDAnHlgBbkMV_5" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when="cross-origin" allowfullscreen></iframe>
+        </div>
+
+        <h3>A Classic Example: The P300 Speller</h3>
+        <p>How can we use this to do something useful, like type a message? One of the first and most famous BCI applications is the "P300 Speller." Here's how it works:</p>
+        <ol>
+            <li><strong>The Grid:</strong> You look at a screen with a grid of letters and numbers.</li>
+            <li><strong>The Flash:</strong> Different rows and columns of this grid flash randomly and very quickly.</li>
+            <li><strong>Your Job:</strong> You don't do anything except focus your attention on the single letter you want to type. Let's say you want to type 'C'.</li>
+            <li><strong>The Brain's "Aha!" Moment:</strong> Every time the row or column containing 'C' flashes, your brain has a tiny, subconscious moment of recognition. This creates a specific brain signal called the <strong>P300 wave</strong>, which is a positive spike in activity that happens about 300 milliseconds after you see something you were looking for.</li>
+            <li><strong>The Computer Decodes:</strong> The BCI software, connected to your EEG cap, is constantly watching for that P300 spike. When it detects one, it notes which row or column just flashed. After a few flashes, it can pinpoint the exact letter at the intersection of that row and column and types 'C' on the screen!</li>
+        </ol>
+
+        <div class="video-container">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/eR_WZ37w364?si=ONTuWkPQY-YdoPRJ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        <h3>Listening From the Outside vs. Inside</h3>
+        <p>There are two main ways to "listen" to the brain:</p>
+        <ul>
+            <li><strong>Non-Invasive BCI:</strong> This is the most common type, using an <strong>EEG cap</strong> that sits on your scalp. It's safe and easy to use, but the signals have to travel through your skin and skull, so they can be a bit "muffled," like trying to hear a conversation through a wall.</li>
+            <li><strong>Invasive BCI:</strong> This involves a surgical procedure to place tiny electrodes directly on the surface of the brain or even inside it. The signal is incredibly clear and precise, allowing for much more complex control (like moving an advanced robotic arm). This is what you'll see in the next section!</li>
+        </ul>
+
+        <hr>
+
+        <h2>Level Up: From Moving Cursors to Moving Robots! 🤖</h2>
+        <p>This is where things get really cool. If a computer can understand your brain's command to type a letter, why can't it understand a command to move a robotic arm? It can! This is the transition from BCI to <strong>robotics</strong>. Watch this video to see it in action:</p>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/sk1NkWl_W2Y?si=bTcJqKVdsoMLHBAs" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+
+        <p>This technology has incredible, life-changing potential, such as:</p>
+        <ul>
+            <li>Helping paralyzed people control a robotic arm to eat or hug a loved one.</li>
+            <li>Controlling rovers on Mars from right here on Earth.</li>
+            <li>Creating new, mind-blowing forms of art or music.</li>
+        </ul>
+
+        <hr>
+
+        <h2>🤔 Your Turn to Think!</h2>
+        <p>Now it's your turn to be the scientist and the philosopher. Type your answers below!</p>
+        
+        <div class="question-box">
+            <label for="q1"><strong>1. The Fun Stuff:</strong> If you could connect your brain to any machine, what would it be and what's the first thing you would do?</label>
+            <textarea id="q1" placeholder="Maybe control a spaceship? Or design a video game instantly?"></textarea>
+        </div>
+        
+        <div class="question-box">
+            <label for="q2"><strong>2. Mind Readers?:</strong> If this technology gets good enough to translate thoughts into words, should we be able to "read" someone's mind? Where do you draw the line?</label>
+            <textarea id="q2" placeholder="What are the pros and cons?"></textarea>
+        </div>
+
+        <div class="question-box">
+            <label for="q3"><strong>3. Who's in Control?:</strong> Imagine you're controlling a robot with your mind and it accidentally breaks something. Is it your fault, or a bug in the program? Who is responsible?</label>
+            <textarea id="q3" placeholder="This is a tough ethical question!"></textarea>
+        </div>
+
+        <div class="question-box">
+            <label for="q4"><strong>4. Brain Hacking:</strong> If your brain is connected to the internet, could it be hacked? What rules would we need to keep our thoughts safe?</label>
+            <textarea id="q4" placeholder="Think about passwords for your brain..."></textarea>
+        </div>
+        
+        <button onclick="saveAnswers()">Click to Save My Thoughts!</button>
+        <p id="feedback" style="text-align:center; color: green; font-weight: bold;"></p>
+        
+    </div>
+
+    <script>
+        function saveAnswers() {
+            const q1 = document.getElementById('q1').value;
+            const q2 = document.getElementById('q2').value;
+            const q3 = document.getElementById('q3').value;
+            const q4 = document.getElementById('q4').value;
+
+            if (q1 || q2 || q3 || q4) {
+                const feedback = document.getElementById('feedback');
+                feedback.textContent = 'Awesome! Your brilliant ideas have been noted! ✨';
+                
+                setTimeout(() => {
+                    feedback.textContent = '';
+                }, 4000);
+
+            } else {
+                alert("Don't be shy, type in some of your thoughts first!");
+            }
+        }
+    </script>
+
+</body>
+</html>
