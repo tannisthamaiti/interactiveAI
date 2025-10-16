@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Prompting Principles</title>
+    <style>
+        /* --- Basic Styling --- */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f4f7f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* --- Main Content Container --- */
+        .container {
+            background-color: #ffffff;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            max-width: 800px;
+            width: 100%;
+        }
+
+        /* --- Headers --- */
+        h1, h2, h3 {
+            color: #1a253c;
+        }
+        h1 { font-size: 2em; border-bottom: 2px solid #e1e5ea; padding-bottom: 10px; margin-bottom: 20px; }
+        h2 { font-size: 1.5em; border-bottom: 2px solid #e1e5ea; padding-bottom: 10px; margin-bottom: 20px; }
+        h3 { font-size: 1.2em; margin-top: 30px; }
+        
+        /* --- Accordion Button Styling --- */
+        .accordion {
+            background-color: #eef2f7;
+            color: #444;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: background-color 0.4s ease;
+            border-radius: 8px;
+            margin-top: 10px;
+            position: relative;
+        }
+
+        .accordion:after {
+            content: '+'; /* Plus icon */
+            font-size: 1.4em;
+            color: #555;
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: transform 0.3s ease;
+        }
+
+        .accordion.active:after {
+            content: "−"; /* Minus icon */
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        .accordion:hover, .accordion.active {
+            background-color: #dbe4ef;
+        }
+
+        /* --- Content Panel Styling --- */
+        .panel {
+            padding: 0 18px;
+            background-color: white;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+            border: 1px solid #e1e5ea;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .panel p, ul {
+            line-height: 1.6;
+        }
+        
+        /* --- Code Example Block --- */
+        pre {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+            white-space: pre-wrap;
+        }
+
+        /* --- Assignment Styling --- */
+        .assignment ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .assignment li {
+            background-color: #fafbfd;
+            border: 1px solid #e1e5ea;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Principles of Effective Prompting 🚀</h1>
+        <h2>Principle 1: Write Clear and Specific Instructions</h2>
+        <p>Use the following tactics to make your instructions to an AI unambiguous and more likely to produce the desired output.</p>
+
+        <button class="accordion">Tactic 1: Use Delimiters</button>
+        <div class="panel">
+            <p><strong>Concept:</strong> Use delimiters to clearly indicate distinct parts of the input. Delimiters can be anything like: <code>```</code>, <code>"""</code>, <code>&lt; &gt;</code>, <code>&lt;tag&gt; &lt;/tag&gt;</code>, etc.</p>
+            <p><strong>Example (Python f-string):</strong> This shows how to structure a prompt that separates instructions from the text to be processed.</p>
+            <pre><code>text = f"""
+You should express what you want a model to do by 
+providing instructions that are as clear and 
+specific as you can possibly make them. 
+This will guide the model towards the desired output, 
+and reduce the chances of receiving irrelevant 
+or incorrect responses. Don't confuse writing a 
+clear prompt with writing a short prompt. 
+In many cases, longer prompts provide more clarity 
+and context for the model, which can lead to 
+more detailed and relevant outputs.
+"""
+
+prompt = f"""
+Summarize the text delimited by triple backticks 
+into a single sentence.
+```{text}```
+"""</code></pre>
+        </div>
+
+        <button class="accordion">Tactic 2: Ask for Structured Output</button>
+        <div class="panel">
+            <p><strong>Concept:</strong> Request the output in a specific format like JSON or HTML. This makes the response predictable and easier to use in other programs or workflows.</p>
+            <p><strong>Example (Python f-string):</strong></p>
+            <pre><code>prompt = f"""
+Generate a list of three made-up book titles along 
+with their authors and genres. 
+Provide them in JSON format with the following keys: 
+book_id, title, author, genre.
+"""</code></pre>
+        </div>
+
+        <button class="accordion">Tactic 3: Check Whether Conditions Are Satisfied</button>
+        <div class="panel">
+            <p><strong>Concept:</strong> Ask the model to first verify if certain conditions are met before performing a task. This helps prevent incorrect responses based on flawed assumptions.</p>
+            
+            <p><strong>Example 1 (Instructions Found):</strong> The model checks the text, finds instructions, and formats them as requested.</p>
+            <pre><code>text_1 = f"""
+Making a cup of tea is easy! First, you need to get some 
+water boiling. While that's happening, 
+grab a cup and put a tea bag in it. Once the water is 
+hot enough, just pour it over the tea bag. 
+Let it sit for a bit so the tea can steep. After a 
+few minutes, take out the tea bag. If you 
+like, you can add some sugar or milk to taste. 
+And that's it! You've got yourself a delicious 
+cup of tea to enjoy.
+"""
+
+prompt = f"""
+You will be provided with text delimited by triple quotes. 
+If it contains a sequence of instructions, 
+re-write those instructions in the following format:
+
+Step 1 - ...
+Step 2 - …
+…
+Step N - …
+
+If the text does not contain a sequence of instructions, 
+then simply write \"No steps provided.\"
+
+\"\"\"{text_1}\"\"\"
+"""</code></pre>
+
+            <p style="margin-top: 20px;"><strong>Example 2 (No Instructions Found):</strong> The model checks the text, finds no instructions, and provides the alternative response.</p>
+            <pre><code>text_2 = f"""
+The sun is shining brightly today, and the birds are 
+singing. It's a beautiful day to go for a 
+walk in the park. The flowers are blooming, and the 
+trees are swaying gently in the breeze. People 
+are out and about, enjoying the lovely weather. 
+Some are having picnics, while others are playing 
+games or simply relaxing on the grass. It's a 
+perfect day to spend time outdoors and appreciate the 
+beauty of nature.
+"""
+
+prompt = f"""
+You will be provided with text delimited by triple quotes. 
+If it contains a sequence of instructions, 
+re-write those instructions in the following format:
+
+Step 1 - ...
+Step 2 - …
+…
+Step N - …
+
+If the text does not contain a sequence of instructions, 
+then simply write \"No steps provided.\"
+
+\"\"\"{text_2}\"\"\"
+"""</code></pre>
+        </div>
+
+        <button class="accordion">Tactic 4: Few-shot Prompting</button>
+        <div class="panel">
+            <p><strong>Concept:</strong> Provide one or more high-quality examples of the task you want the AI to perform. This helps the model understand the desired pattern, tone, and format for its response.</p>
+            <p><strong>Example:</strong> This prompt gives one complete example to establish a consistent style before asking the model to continue the pattern.</p>
+            <pre><code>prompt = f"""
+Your task is to answer in a consistent style.
+
+&lt;child&gt;: Teach me about patience.
+
+&lt;grandparent&gt;: The river that carves the deepest 
+valley flows from a modest spring; the 
+grandest symphony originates from a single note; 
+the most intricate tapestry begins with a solitary thread.
+
+&lt;child&gt;: Teach me about resilience.
+"""</code></pre>
+        </div>
+
+        <hr style="margin-top: 40px; margin-bottom: 20px; border: 0; border-top: 2px solid #e1e5ea;">
+        
+        <div class="assignment">
+            <h2>Assignment: Mastering the Art of the Prompt ✍️</h2>
+            <p>Your goal is to write four distinct prompts, each one demonstrating your understanding of a key tactic for clear and effective communication with an AI.</p>
+
+            <h3>1. The Delimiter Challenge</h3>
+            <p>Find a short paragraph of text from any source (a news article, a book, a website). Your task is to write a prompt that asks an AI to perform an action on this text.</p>
+            <ul>
+                <li><strong>Requirement:</strong> You must use <strong>delimiters</strong> (like <code>"""..."""</code> or <code>---...---</code>) to clearly separate your instructions from the text you want the AI to analyze.</li>
+                <li><strong>Example Actions:</strong> Summarize the text, translate it, extract all the names of people, or change its tone from formal to casual.</li>
+            </ul>
+
+            <h3>2. The Structured Output Challenge</h3>
+            <p>Imagine you are building an application that needs data about a specific topic (e.g., planets, famous artists, types of cheese, car manufacturers).</p>
+            <ul>
+                <li><strong>Requirement:</strong> Write a prompt that asks the AI to generate at least three examples of your chosen topic. You must specify that the output should be in <strong>JSON format</strong> and define the exact keys you want to see in the response (e.g., <code>name</code>, <code>discovery_date</code>, <code>mass</code>).</li>
+            </ul>
+
+            <h3>3. The Conditional Challenge</h3>
+            <p>Write a prompt that instructs an AI to analyze a piece of text and perform a different action based on what it finds.</p>
+            <ul>
+                <li><strong>Requirement:</strong> Your prompt must include a clear <strong>condition</strong>. For example, "If the following customer review is positive, write a cheerful thank you message. If it is negative, write a polite apology and ask for more details."</li>
+            </ul>
+
+            <h3>4. The Style-Mimic Challenge (Few-shot)</h3>
+            <p>Your task is to teach an AI a new, specific style of responding by giving it an example to follow.</p>
+            <ul>
+                <li><strong>Requirement:</strong> Write a single prompt that includes at least one complete example of an input and the desired output style. Then, provide a new input and ask the AI to apply that same style.</li>
+                <li><strong>Example Ideas:</strong> Teach it to turn movie titles into limericks, describe historical events like a pirate, or answer questions with another question.</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const accordions = document.querySelectorAll(".accordion");
+
+            accordions.forEach(accordion => {
+                accordion.addEventListener("click", function() {
+                    // Toggle the 'active' class for styling changes (like the +/- icon)
+                    this.classList.toggle("active");
+
+                    // Get the content panel that is the next sibling of the button
+                    const panel = this.nextElementSibling;
+
+                    // Toggle the panel's display by setting its max-height
+                    if (panel.style.maxHeight) {
+                        panel.style.maxHeight = null; // Collapse the panel
+                        panel.style.padding = "0 18px";
+                    } else {
+                        panel.style.maxHeight = panel.scrollHeight + "px"; // Expand the panel
+                        panel.style.padding = "10px 18px";
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
