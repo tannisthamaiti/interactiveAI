@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Test/Train/Val Split</title>
+    <style>
+        /* Basic Styles */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        /* Main Container */
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #005a9c;
+        }
+        
+        p {
+            font-size: 1.1em;
+            line-height: 1.5;
+        }
+
+        /* The Data "Piles" */
+        #all-data {
+            margin: 30px auto;
+            width: 50%;
+            height: 100px;
+            background-color: #007bff;
+            border: 2px solid #0056b3;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2em;
+            transition: all 0.5s ease-in-out;
+            transform-origin: bottom;
+        }
+
+        /* The Button */
+        #split-button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        #split-button:hover {
+            background-color: #218838;
+            transform: scale(1.05);
+        }
+        
+        #split-button:disabled {
+            background-color: #999;
+            cursor: not-allowed;
+        }
+
+        /* The 3 Buckets */
+        .buckets-container {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin-top: 40px;
+            gap: 20px;
+        }
+
+        .bucket {
+            width: 30%;
+            background-color: #ffffff;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .bucket:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
+
+        .bucket h2 {
+            margin-top: 0;
+        }
+        
+        .bucket p {
+            font-size: 0.95em;
+        }
+
+        /* The animated data blocks inside the buckets */
+        .data-block {
+            width: 100%;
+            border-radius: 5px;
+            transition: all 0.8s ease-in-out 0.5s; /* Delay start */
+            height: 0; /* Starts at 0 height */
+            opacity: 0; /* Starts invisible */
+        }
+        
+        #train-data {
+            background-color: #007bff; /* Blue */
+        }
+        
+        #val-data {
+            background-color: #ffc107; /* Yellow */
+        }
+        
+        #test-data {
+            background-color: #dc3545; /* Red */
+        }
+        
+        /* The "Split" State */
+        /* This class is added by JavaScript */
+        
+        body.split #all-data {
+            /* Shrinks the "all-data" pile to nothing */
+            transform: scaleY(0);
+            height: 0;
+            opacity: 0;
+            margin: 0 auto;
+        }
+        
+        body.split #train-data {
+            height: 140px; /* 70% */
+            opacity: 1;
+        }
+        
+        body.split #val-data {
+            height: 30px; /* 15% */
+            opacity: 1;
+        }
+        
+        body.split #test-data {
+            height: 30px; /* 15% */
+            opacity: 1;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Let's Learn the Test-Train-Val Split!</h1>
+        <p>Imagine all your 1,000 practice exam questions are in this one big pile.</p>
+
+        <div id="all-data">
+            1,000 Practice Questions
+        </div>
+
+        <button id="split-button">Click Me to Split the Data!</button>
+
+        <div class="buckets-container">
+            
+            <div class="bucket" id="train-bucket">
+                <h2>📚 Training Set</h2>
+                <div class="data-block" id="train-data"></div>
+                <p><strong>Analogy:</strong> This is your <strong>Homework</strong> (~700 questions).</p>
+                <p>This is the biggest pile. The AI "studies" these over and over to learn the patterns. It's just like you doing your homework to learn.</p>
+            </div>
+            
+            <div class="bucket" id="val-bucket">
+                <h2>✍️ Validation Set</h2>
+                <div class="data-block" id="val-data"></div>
+                <p><strong>Analogy:</strong> This is your <strong>Practice Quiz</strong> (~150 questions).</p>
+                <p>The AI takes a "practice quiz" with this data. We use the score to "tweak" the AI and see if it's improving. You'd use your quiz score to know you need to study fractions more!</p>
+            </div>
+            
+            <div class="bucket" id="test-bucket">
+                <h2>🏆 Test Set</h2>
+                <div class="data-block" id="test-data"></div>
+                <p><strong>Analogy:</strong> This is the <strong>Final Exam</strong> (~150 questions).</p>
+                <p>The AI <strong>NEVER</strong> sees this pile until the very end. This gives us the *true, final score* to see how smart it *really* is on brand new problems.</p>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Wait for the page to be ready
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // Get the button
+            const splitButton = document.getElementById('split-button');
+            
+            // Add a click listener
+            splitButton.addEventListener('click', () => {
+                
+                // 1. Add the "split" class to the body
+                // The CSS handles all the animation from here!
+                document.body.classList.add('split');
+                
+                // 2. Disable the button so you can't click it again
+                splitButton.disabled = true;
+                splitButton.textContent = 'Split Complete!';
+            });
+        });
+    </script>
+
+</body>
+</html>
