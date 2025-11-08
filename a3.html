@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My First ML Workflow</title>
+    <style>
+        /* Basic styles to make it look nice */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6;
+            background-color: #f7f9fc;
+            color: #333;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        h1, h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 5px;
+        }
+        /* Style for code blocks */
+        pre {
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            overflow-x: auto; /* Allow horizontal scrolling for code */
+        }
+        code {
+            font-family: "Courier New", Courier, monospace;
+            font-size: 0.95em;
+        }
+        /* Style for the interactive sections */
+        details {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        /* The "title" you click on */
+        summary {
+            font-weight: bold;
+            font-size: 1.2em;
+            padding: 15px;
+            cursor: pointer;
+            background-color: #f9f9f9;
+        }
+        /* Add a little triangle arrow */
+        summary::marker {
+            color: #3498db;
+        }
+        /* The content inside the collapsible section */
+        .details-content {
+            padding: 0 20px 20px 20px;
+        }
+        /* Style for the outputs */
+        .output {
+            background-color: #fdfdfd;
+            border-top: 1px dashed #ccc;
+            margin-top: 10px;
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🤖 My First Machine Learning Workflow</h1>
+    <p>This page shows how we prepare data for a machine learning model, step-by-step!</p>
+
+    <h2>The Goal</h2>
+    <p>Our goal is to use the <b>Color</b> and <b>Age</b> to predict if someone <b>Purchased</b> an item. But a computer doesn't understand "Red" or "Green". We have to convert everything into numbers!</p>
+
+    <h2>Start: Our Original Data</h2>
+    <p>First, we load our data using pandas.</p>
+    <pre><code>
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
+import numpy as np
+
+# 1. Create Sample Data
+data = {
+    'Color': ['Red', 'Green', 'Blue', 'Green', 'Red', 'Blue', 'Red', 'Green'],
+    'Age': [25, 42, 31, 55, 28, 60, 33, 45],
+    'Purchased': [0, 1, 0, 1, 0, 1, 0, 1]
+}
+df = pd.DataFrame(data)
+    </code></pre>
+    <div class="output">
+        <b>Output (Our Data):</b>
+        <pre><code>
+--- Original Data ---
+   Color  Age  Purchased
+0    Red   25          0
+1  Green   42          1
+2   Blue   31          0
+3  Green   55          1
+4    Red   28          0
+5   Blue   60          1
+6    Red   33          0
+7  Green   45          1
+        </code></pre>
+    </div>
+
+    <details open>
+        <summary>Step 1: Create the Train-Test Split</summary>
+        <div class="details-content">
+            <p>This is the most important rule: we split our data into a <b>Training set</b> (to learn from) and a <b>Test set</b> (to check our work later). We must *never* let our model learn from the test set!</p>
+            <pre><code>
+# 2. Define Features (X) and Target (y)
+X = df.drop('Purchased', axis=1) # The "clues" (Color, Age)
+y = df['Purchased']             # The "answer"
+
+# 3. Create the Train-Test Split
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, 
+    test_size=0.25,  # Use 25% of data for testing
+    random_state=42  # 'random_state' just makes sure we get the same "random" split every time
+)
+            </code></pre>
+            <div class="output">
+                <b>Output (Our split data):</b>
+                <pre><code>
+--- Training Features (X_train) Before Processing ---
+   Color  Age
+7  Green   45
+2   Blue   31
+6    Red   33
+4    Red   28
+0    Red   25
+3  Green   55
+
+--- Test Features (X_test) Before Processing ---
+   Color  Age
+1  Green   42
+5   Blue   60
+                </code></pre>
+            </div>
+        </div>
+    </details>
+
+    <details>
+        <summary>Step 2: Process 'Color' (One-Hot Encoding)</summary>
+        <div class="details-content">
+            <p>We need to turn "Red", "Green", and "Blue" into numbers. We use <b>One-Hot Encoding</b>. This creates new columns for each color, with a 1 or 0.</p>
+            <p><b>Rule:</b> We <code>.fit()</code> (learn) the categories <b>only from <code>X_train</code></b>.</p>
+            <pre><code>
+# 4. Process Categorical Data ('Color')
+color_encoder = OneHotEncoder(sparse_output=False, handle_unknown='ignore')
+
+# 4a. Fit the encoder ONLY on the training data's 'Color' column
+color_encoder.fit(X_train[['Color']])
+
+# 4b. Transform both train and test data
+X_train_colors = color_encoder.transform(X_train[['Color']])
+X_test_colors = color_encoder.transform(X_test[['Color']])
+            </code></pre>
+            <div class="output">
+                <b>Output (The new 'Color' numbers):</b>
+                <pre><code>
+# Columns are: [Blue, Green, Red] (alphabetical)
+Processed Training Colors (One-Hot):
+ [[0. 1. 0.]  (Green)
+ [1. 0. 0.]  (Blue)
+ [0. 0. 1.]  (Red)
+ [0. 0. 1.]  (Red)
+ [0. 0. 1.]  (Red)
+ [0. 1. 0.]] (Green)
+
+Processed Test Colors (One-Hot):
+ [[0. 1. 0.]  (Green)
+ [1. 0. 0.]] (Blue)
+                </code></pre>
+            </div>
+        </div>
+    </details>
+
+    <details>
+        <summary>Step 3: Process 'Age' (Standard Scaling)</summary>
+        <div class="details-content">
+            <p>The 'Age' numbers (like 25, 55, 60) are much bigger than our new 0s and 1s. This can confuse the model. We <b>scale</b> them to be smaller and centered around 0.</p>
+            <p><b>Rule:</b> We <code>.fit()</code> (learn the average and spread) <b>only from <code>X_train</code></b>.</p>
+            <pre><code>
+# 5. Process Numerical Data ('Age')
+age_scaler = StandardScaler()
+
+# 5a. Fit the scaler ONLY on the training data's 'Age' column
+age_scaler.fit(X_train[['Age']])
+
+# 5b. Transform both train and test data
+X_train_age = age_scaler.transform(X_train[['Age']])
+X_test_age = age_scaler.transform(X_test[['Age']])
+            </code></pre>
+            <div class="output">
+                <b>Output (The new 'Age' numbers):</b>
+                <pre><code>
+Processed Training Age (Scaled):
+ [[ 0.54583163]
+ [-0.64215486]
+ [-0.48161614]
+ [-0.88297299]
+ [-1.12384956]
+ [ 1.58476192]]
+
+Processed Test Age (Scaled):
+ [[ 0.22447477]
+ [ 1.92611877]]
+                </code></pre>
+            </div>
+        </div>
+    </details>
+
+    <details>
+        <summary>Step 4: Combine Everything!</summary>
+        <div class="details-content">
+            <p>Now we just stick our processed <code>Color</code> columns and processed <code>Age</code> column together side-by-side. The data is finally ready for a model!</p>
+            <pre><code>
+# 6. Combine the Processed Columns
+X_train_processed = np.hstack((X_train_colors, X_train_age))
+X_test_processed = np.hstack((X_test_colors, X_test_age))
+
+# 7. (Optional) Make it a nice DataFrame again
+color_features = color_encoder.get_feature_names_out(['Color'])
+all_feature_names = np.concatenate([color_features, ['Age_Scaled']])
+X_train_processed_df = pd.DataFrame(X_train_processed, columns=all_feature_names)
+            </code></pre>
+            <div class="output">
+                <b>Output (Our FINAL processed training data):</b>
+                <pre><code>
+   Color_Blue  Color_Green  Color_Red  Age_Scaled
+0         0.0          1.0        0.0    0.545832
+1         1.0          0.0        0.0   -0.642155
+2         0.0          0.0        1.0   -0.481616
+3         0.0          0.0        1.0   -0.882973
+4         0.0          0.0        1.0   -1.123850
+5         0.0          1.0        0.0    1.584762
+                </code></pre>
+            </div>
+        </div>
+    </details>
+
+</body>
+</html>
