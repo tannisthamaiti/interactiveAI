@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machine Learning Explanation</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f8f9fa;
+            color: #212529;
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        h1, h2, h3 {
+            color: #0056b3;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 5px;
+        }
+        h1 { font-size: 2.5em; }
+        h2 { font-size: 2em; margin-top: 40px; }
+        h3 { font-size: 1.5em; margin-top: 30px; color: #007bff; }
+        p { margin-bottom: 15px; }
+        code {
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+            background-color: #e9ecef;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        pre {
+            background-color: #282c34;
+            color: #abb2bf;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 0.9em;
+        }
+        pre.output {
+            background-color: #f1f3f5;
+            color: #343a40;
+            border: 1px solid #dee2e6;
+        }
+        summary {
+            cursor: pointer;
+            font-weight: bold;
+            color: #0056b3;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        details {
+            background-color: #ffffff;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .comparison-table th, .comparison-table td {
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            text-align: left;
+        }
+        .comparison-table th {
+            background-color: #007bff;
+            color: white;
+        }
+        .comparison-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        .good { color: #28a745; font-weight: bold; }
+        .bad { color: #dc3545; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Your Smart Medical "Fortune Teller" 🧠🔮</h1>
+    <p>This is a guide to building a "machine learning model." Think of it like a smart "brain" we can teach. We'll teach it to guess a person's medical costs by looking at their info (like age,
+    bmi, and if they're a smoker).</p>
+    <p>Predicting a number like <code>charges</code> is called a <strong>Regression</strong>.</p>
+
+    <h2>Part 1: Getting the Data Ready (Preprocessing)</h2>
+    <p>A computer can't read words like "female" or "smoker." It only understands numbers. We also need to make sure all the numbers are on a similar scale. So, we have to do three key steps.</p>
+
+    <h3>1. Train-Test Split (Practice vs. The Real Test) 📚</h3>
+    <p>Imagine you have a math test. Would you study using the <em>exact</em> questions that will be on the final test? No! You'd get 100%, but you wouldn't have <em>learned</em> anything.</p>
+    <ul>
+        <li><strong>Train Set (Practice Questions):</strong> We use most of the data (80%) to <em>teach</em> our model.</li>
+        <li><strong>Test Set (The Real Test):</strong> We hide the other 20%. After the model is trained, we use this <em>unseen</em> data to see how well it <em>really</em> learned.</li>
+    </ul>
+
+    <h3>2. One-Hot Encoding (Turning Words into Switches) 💡</h3>
+    <p>This is how we turn words into numbers. Think of a light switch panel for the <code>smoker</code> column ("yes" or "no"):</p>
+    <ul>
+        <li>If a person is a smoker, a new <code>smoker_yes</code> switch is <code>1</code> (ON) and <code>smoker_no</code> is <code>0</code> (OFF).</li>
+        <li>If they are a non-smoker, <code>smoker_yes</code> is <code>0</code> (OFF) and <code>smoker_no</code> is <code>1</code> (ON).</li>
+    </ul>
+    <p>We do this for <code>sex</code> and <code>region</code> too. This way, the computer can understand our text data.</p>
+    
+    <h3>3. StandardScaler (Making Numbers Fair) ⚖️</h3>
+    <p>Look at our data. <code>age</code> might be 50, but <code>children</code> is just 2. The computer might <em>think</em> 50 is way more important than 2 just because it's a bigger number. <strong>StandardScaler</strong> fixes this.</p>
+    <p>It's like a fairness rule. It squishes all our number columns (<code>age</code>, <code>bmi</code>, <code>children</code>) so they all have a similar scale. Now, the model can judge them fairly based on their <em>pattern</em>, not their <em>size</em>.</p>
+
+    <h2>Part 2: Building Our "Good" Model (The Step-by-Step Way)</h2>
+    <p>Here is the code where we do the encoding and scaling in two separate steps, then "tape" the results together. This is what <code>ColumnTransformer</code> was doing for us automatically!</p>
+    
+    <details>
+        <summary>Click to see the Step-by-Step Model Training Code</summary>
+        <pre><code>import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_absolute_error, r2_score
+
+# --- Part 1: Imports and Setup ---
+df = pd.read_csv("Medical_insurance.csv")
+
+# Define our features (X) and target (y)
+X = df.drop('charges', axis=1)
+y = df['charges']
+
+# Define which columns are which type
+numerical_features = ['age', 'bmi', 'children']
+categorical_features = ['sex', 'smoker', 'region']
+
+# --- Part 2: Split the Data (Practice vs. Test) ---
+# We MUST split before we do any fitting!
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+print(f"Original training data shape: {X_train.shape}")
+print(f"Original testing data shape: {X_test.shape}")
+print("---")
+
+# --- Part 3: OneHotEncoding (for TEXT columns) ---
+print("Applying OneHotEncoder...")
+# Create the encoder
+ohe = OneHotEncoder(handle_unknown='ignore', sparse_output=False)
+
+# Fit and transform the training data
+X_train_cat = ohe.fit_transform(X_train[categorical_features])
+
+# *Only* transform the test data
+X_test_cat = ohe.transform(X_test[categorical_features])
+
+print(f"New shape of categorical (text) train data: {X_train_cat.shape}")
+print(f"New shape of categorical (text) test data: {X_test_cat.shape}")
+print("---")
+
+# --- Part 4: StandardScaler (for NUMBER columns) ---
+print("Applying StandardScaler...")
+# Create the scaler
+scaler = StandardScaler()
+
+# Fit and transform the training data
+X_train_num_scaled = scaler.fit_transform(X_train[numerical_features])
+
+# *Only* transform the test data
+X_test_num_scaled = scaler.transform(X_test[numerical_features])
+
+print(f"Shape of scaled numerical train data: {X_train_num_scaled.shape}")
+print(f"Shape of scaled numerical test data: {X_test_num_scaled.shape}")
+print("---")
+
+# --- Part 5: Combine and Train the Model ---
+print("Combining new data and training model...")
+# np.hstack() "stacks" the arrays horizontally (side-by-side)
+X_train_preprocessed = np.hstack((X_train_num_scaled, X_train_cat))
+X_test_preprocessed = np.hstack((X_test_num_scaled, X_test_cat))
+
+print(f"Final shape of preprocessed train data: {X_train_preprocessed.shape}")
+print(f"Final shape of preprocessed test data: {X_test_preprocessed.shape}")
+
+# --- Train the model (this part is the same as before) ---
+model = LinearRegression()
+model.fit(X_train_preprocessed, y_train)
+
+# --- Evaluate the model (this part is also the same) ---
+y_pred = model.predict(X_test_preprocessed)
+mae = mean_absolute_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+
+print("---")
+print("--- Final Model Evaluation ---")
+print(f"Mean Absolute Error (MAE): ${mae:,.2f}")
+print(f"R-squared (R2): {r2:.4f}")</code></pre>
+        
+        <p><strong>Code Output:</strong></p>
+        <pre class="output">Original training data shape: (2217, 6)
+Original testing data shape: (555, 6)
+---
+Applying OneHotEncoder...
+New shape of categorical (text) train data: (2217, 8)
+New shape of categorical (text) test data: (555, 8)
+---
+Applying StandardScaler...
+Shape of scaled numerical train data: (2217, 3)
+Shape of scaled numerical test data: (555, 3)
+---
+Combining new data and training model...
+Final shape of preprocessed train data: (2217, 11)
+Final shape of preprocessed test data: (555, 11)
+---
+--- Final Model Evaluation ---
+Mean Absolute Error (MAE): $4,160.25
+R-squared (R2): 0.7398</pre>
+    </details>
+
+    <h3>What do these scores mean?</h3>
+    <p>Notice the scores are <strong>identical</strong> to the "easy way"!</p>
+    <ul>
+        <li><strong>Mean Absolute Error (MAE):</strong> On average, our model's guess was off by about <strong>$4,160.25</strong>.</li>
+        <li><strong>R-squared (R2):</strong> Ours is <strong>0.7398</strong>. This means our model was able to "explain" about <strong>74%</strong> of the <em>reason</em> for the different prices.</li>
+    </ul>
+
+    <h2>Part 3: What Happens When New Data Comes In? 👩‍⚕️</h2>
+    <p>This part is still the same. Once the model is trained, we *save* the <code>ohe</code>, the <code>scaler</code>, and the <code>model</code>. When a new person comes in, we'd have to run their data through all three steps in the correct order.</p>
+    
+    <details>
+        <summary>Click to see the "New Data Prediction" Code (Old Way)</summary>
+        <pre><code># This is the code from the *first* model, just for reference!
+# We used the 'preprocessor' shortcut here.
+
+# --- Part 8: Predicting on New Data ---
+new_data = pd.DataFrame({
+    'age': [19], 'sex': ['female'], 'bmi': [27.9],
+    'children': [0], 'smoker': ['yes'], 'region': ['southwest']
+})
+new_data_preprocessed = preprocessor.transform(new_data)
+new_prediction = model.predict(new_data_preprocessed)
+print(f"Predicted charges for this new person: ${new_prediction[0]:,.2f}")
+
+new_data_2 = pd.DataFrame({
+    'age': [35], 'sex': ['male'], 'bmi': [24.5],
+    'children': [2], 'smoker': ['no'], 'region': ['northeast']
+})
+new_data_2_preprocessed = preprocessor.transform(new_data_2)
+new_prediction_2 = model.predict(new_data_2_preprocessed)
+print(f"Predicted charges for this second person: ${new_prediction_2[0]:,.2f}")</code></pre>
+        <p><strong>Code Output:</strong></p>
+        <pre class="output">Predicted charges for this new person: $25,311.75
+Predicted charges for this second person: $6,291.96</pre>
+    </details>
+
+    <h2>Part 4: What Are Outliers? 👽</h2>
+    <p>An <strong>outlier</strong> is any data point that is <em>way different</em> from the rest. The easiest way to <em>see</em> them is with a <strong>box plot</strong>. The <strong>dots</strong> all by themselves are the outliers.</p>
+    
+    <details>
+        <summary>Click to see the "Outlier Detection" Code</summary>
+        <pre><code># --- Part 9: Finding Outliers ---
+Q1 = df['bmi'].quantile(0.25)
+Q3 = df['bmi'].quantile(0.75)
+IQR = Q3 - Q1
+lower_bound = Q1 - 1.5 * IQR
+upper_bound = Q3 + 1.5 * IQR
+
+print(f"--- Outlier Detection for 'bmi' (IQR Method) ---")
+print(f"Lower Bound (anything below this is an outlier): {lower_bound:.2f}")
+print(f"Upper Bound (anything above this is an outlier): {upper_bound:.2f}")
+
+bmi_outliers = df[(df['bmi'] < lower_bound) | (df['bmi'] > upper_bound)]
+print(f"\nFound {len(bmi_outliers)} 'bmi' outliers:")
+print(bmi_outliers.head(10).to_html()) # .to_html() for nice formatting in the HTML
+print("--------------------------------------------------\n")
+
+# --- Method 2: Graphing (Box Plots) ---
+plt.figure(figsize=(15, 5))
+plt.subplot(1, 3, 1); sns.boxplot(y=df['bmi']); plt.title('Box Plot for BMI')
+plt.subplot(1, 3, 2); sns.boxplot(y=df['age']); plt.title('Box Plot for Age')
+plt.subplot(1, 3, 3); sns.boxplot(y=df['charges']); plt.title('Box Plot for Charges')
+plt.tight_layout()
+plt.savefig('outlier_boxplots.png')
+print("Generated 'outlier_boxplots.png' to visualize outliers.")</code></pre>
+        <p><strong>Code Output:</strong></p>
+        <pre class="output">--- Outlier Detection for 'bmi' (IQR Method) ---
+Lower Bound (anything below this is an outlier): 13.39
+Upper Bound (anything above this is an outlier): 47.60
+
+Found 14 'bmi' outliers:
+&lt;table border="1" class="dataframe"&gt;
+  &lt;thead&gt;
+    &lt;tr style="text-align: right;"&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;age&lt;/th&gt;
+      &lt;th&gt;sex&lt;/th&gt;
+      &lt;th&gt;bmi&lt;/th&gt;
+      &lt;th&gt;children&lt;/th&gt;
+      &lt;th&gt;smoker&lt;/th&gt;
+      &lt;th&gt;region&lt;/th&gt;
+      &lt;th&gt;charges&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;116&lt;/th&gt;
+      &lt;td&gt;58&lt;/td&gt;
+      &lt;td&gt;male&lt;/td&gt;
+      &lt;td&gt;49.06&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;no&lt;/td&gt;
+      &lt;td&gt;southeast&lt;/td&gt;
+      &lt;td&gt;11381.3254&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;286&lt;/th&gt;
+      &lt;td&gt;46&lt;/td&gt;
+      &lt;td&gt;female&lt;/td&gt;
+      &lt;td&gt;48.07&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;no&lt;/td&gt;
+      &lt;td&gt;northeast&lt;/td&gt;
+      &lt;td&gt;9432.9253&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;847&lt;/th&gt;
+      &lt;td&gt;23&lt;/td&gt;
+      &lt;td&gt;male&lt;/td&gt;
+      &lt;td&gt;50.38&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;no&lt;/td&gt;
+      &lt;td&gt;southeast&lt;/td&gt;
+      &lt;td&gt;2438.0552&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;860&lt;/th&gt;
+      &lt;td&gt;37&lt;/td&gt;
+      &lt;td&gt;female&lt;/td&gt;
+      &lt;td&gt;47.60&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;yes&lt;/td&gt;
+      &lt;td&gt;southwest&lt;/td&gt;
+      &lt;td&gt;46113.5110&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1047&lt;/th&gt;
+      &lt;td&gt;22&lt;/td&gt;
+      &lt;td&gt;male&lt;/td&gt;
+      &lt;td&gt;52.58&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;yes&lt;/td&gt;
+      &lt;td&gt;southeast&lt;/td&gt;
+      &lt;td&gt;44501.3982&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1088&lt;/th&gt;
+      &lt;td&gt;52&lt;/td&gt;
+      &lt;td&gt;male&lt;/td&gt;
+      &lt;td&gt;47.74&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;no&lt;/td&gt;
+      &lt;td&gt;southeast&lt;/td&gt;
+      &lt;td&gt;9748.9106&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1317&lt;/th&gt;
+      &lt;td&gt;18&lt;/td&gt;
+      &lt;td&gt;male&lt;/td&gt;
+      &lt;td&gt;53.13&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;no&lt;/td&gt;
+      &lt;td&gt;southeast&lt;/td&gt;
+      &lt;td&gt;1163.4627&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1502&lt;/th&gt;
+      &lt;td&gt;58&lt;/td&gt;
+      &lt;td&gt;male&lt;/td&gt;
+      &lt;td&gt;49.06&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;no&lt;/td&gt;
+      &lt;td&gt;southeast&lt;/td&gt;
+      &lt;td&gt;11381.3254&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1672&lt;/th&gt;
+      &lt;td&gt;46&lt;/td&gt;
+      &lt;td&gt;female&lt;/td&gt;
+      &lt;td&gt;48.07&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;no&lt;/td&gt;
+      &lt;td&gt;northeast&lt;/td&gt;
+      &lt;td&gt;9432.9253&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2233&lt;/th&gt;
+      &lt;td&gt;23&lt;/td&gt;
+      &lt;td&gt;male&lt;/td&gt;
+      &lt;td&gt;50.38&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;no&lt;/td&gt;
+      &lt;td&gt;southeast&lt;/td&gt;
+      &lt;td&gt;2438.0552&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+--------------------------------------------------
+
+Generated 'outlier_boxplots.png' to visualize outliers.
+</pre>
+    </details>
+
+    <h3>Here are the Box Plots We Made:</h3>
+    <p>You can't add images this way, but if you ran the code, the image 'outlier_boxplots.png' would be saved to your folder!</p>
+    <p>(Image 'outlier_boxplots.png' would appear here)</p>
+
+    <h2>Part 5: Garbage In, Garbage Out (GIGO) 🗑️</h2>
+    <p>This is the most important rule in all of data science: <strong>If your input data is garbage, your model's predictions will be garbage.</strong></p>
+    <p>Let's prove it by shuffling the <code>smoker</code> column and training a new "garbage" model.</p>
+    
+    <details>
+        <summary>Click to see the "Garbage Model" Code</summary>
+        <pre><code># --- Part 10: "Garbage In, Garbage Out" (GIGO) Scenario ---
+df_garbage = df.copy()
+
+# We will randomly *shuffle* the 'smoker' column.
+df_garbage['smoker'] = np.random.permutation(df_garbage['smoker'])
+
+print("--- 'Garbage' Data Example (shuffled 'smoker' column) ---")
+print(df_garbage.head().to_html()) # .to_html() for nice formatting
+print("----------------------------------------------------------\n")
+
+# --- We have to re-run the *entire* process for the garbage data ---
+X_garbage = df_garbage.drop('charges', axis=1)
+y_garbage = df_garbage['charges']
+X_train_g, X_test_g, y_train_g, y_test_g = train_test_split(X_garbage, y_garbage, test_size=0.2, random_state=42)
+
+# We use the *shortcut* here, but it's the same idea
+preprocessor_g = ColumnTransformer(
+    transformers=[
+        ('scaler', StandardScaler(), numerical_features),
+        ('onehot', OneHotEncoder(), categorical_features)
+    ])
+X_train_g_preprocessed = preprocessor_g.fit_transform(X_train_g)
+X_test_g_preprocessed = preprocessor_g.transform(X_test_g)
+model_g = LinearRegression()
+model_g.fit(X_train_g_preprocessed, y_train_g)
+y_pred_g = model_g.predict(X_test_g_preprocessed)
+garbage_mae = mean_absolute_error(y_test_g, y_pred_g)
+garbage_r2 = r2_score(y_test_g, y_pred_g)
+
+print("--- 'Garbage' Model Evaluation ---")
+print(f"Mean Absolute Error (MAE): ${garbage_mae:,.2f}")
+print(f"R-squared (R2): {garbage_r2:.4f}")</code></pre>
+        <p><strong>Code Output:</strong></p>
+        <pre class="output">--- 'Garbage' Data Example (shuffled 'smoker' column) ---
+&lt;table border="1" class="dataframe"&gt;
+  &lt;thead&gt;
+    &lt;tr style="text-align: right;"&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;age&lt;/th&gt;
+      &lt;th&gt;sex&lt;/th&gt;
+      &lt;th&gt;bmi&lt;/th&gt;
+      &lt;th&gt;children&lt;/th&gt;
+      &lt;th&gt;smoker&lt;/th&gt;
+      &lt;th&gt;region&lt;/th&gt;
+      &lt;th&gt;charges&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;0&lt;/th&gt;
+      &lt;td&gt;19&lt;/td&gt;
+      &lt;td&gt;female&lt;/td&gt;
+      &lt;td&gt;27.900&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;yes&lt;/td&gt;
+      &lt;td&gt;southwest&lt;/td&gt;
+      &lt;td&gt;16884.92400&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1&lt;/th&gt;
+      &lt;td&gt;18&lt;/td&gt;
+      &lt;td&gt;male&lt;/td&gt;
+      &lt;td&gt;33.770&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;no&lt;/td&gt;
+      &lt;td&gt;southeast&lt;/td&gt;
+      &lt;td&gt;1725.55230&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2&lt;/th&gt;
+      &lt;td&gt;28&lt;/td&gt;
+      &lt;td&gt;male&lt;/td&gt;
+      &lt;td&gt;33.000&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;no&lt;/td&gt;
+      &lt;td&gt;southeast&lt;/td&gt;
+      &lt;td&gt;4449.46200&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;3&lt;/th&gt;
+      &lt;td&gt;33&lt;/td&gt;
+      &lt;td&gt;male&lt;/td&gt;
+      &lt;td&gt;22.705&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;yes&lt;/td&gt;
+      &lt;td&gt;northwest&lt;/td&gt;
+      &lt;td&gt;21984.47061&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;4&lt;/th&gt;
+      &lt;td&gt;32&lt;/td&gt;
+      &lt;td&gt;male&lt;/td&gt;
+      &lt;td&gt;28.880&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;no&lt;/td&gt;
+      &lt;td&gt;northwest&lt;/td&gt;
+      &lt;td&gt;3866.85520&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+----------------------------------------------------------
+
+--- 'Garbage' Model Evaluation ---
+Mean Absolute Error (MAE): $8,795.96
+R-squared (R2): 0.1660</pre>
+    </details>
+
+    <h3>The Final Result: Look at the difference!</h3>
+    <table class="comparison-table">
+        <thead>
+            <tr>
+                <th>Model Type</th>
+                <th>Average Mistake (MAE)</th>
+                <th>Explanatory Score (R2)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>✅ "Good" Model</strong></td>
+                <td class="good">$4,160.25</td>
+                <td class="good">0.7398 (Explains ~74%)</td>
+            </tr>
+            <tr>
+                <td><strong>🗑️ "Garbage" Model</strong></td>
+                <td class="bad">$8,795.96</td>
+                <td class="bad">0.1660 (Explains only ~17%)</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>By putting "garbage" data in, we got a "garbage" model out. This proves that the most important part of machine learning is having <strong>good, clean, and accurate data!</strong></p>
+
+</body>
+</html>
