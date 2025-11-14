@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Principle 2: Give the Model Time to "Think"</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f7f9;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+        }
+        h2 {
+            color: #3498db;
+            margin-top: 30px;
+            border-bottom: 1px dashed #ecf0f1;
+            padding-bottom: 5px;
+        }
+        h3 {
+            color: #e74c3c;
+            margin-top: 20px;
+        }
+        .tactic {
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: #ecf0f1;
+            border-radius: 6px;
+        }
+        .example {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #bdc3c7;
+            border-radius: 4px;
+            background-color: #fcfcfc;
+        }
+        .code-block {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            margin-top: 10px;
+        }
+        .output-block {
+            background-color: #e8f6f3;
+            color: #2c3e50;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            margin-top: 10px;
+            border-left: 5px solid #1abc9c;
+        }
+        /* Style for the interactive details/summary element */
+        details {
+            margin-top: 15px;
+            border: 1px solid #dcdcdc;
+            border-radius: 4px;
+            padding: 0;
+        }
+        summary {
+            cursor: pointer;
+            padding: 10px 15px;
+            background-color: #d4e6f1;
+            border-radius: 4px 4px 0 0;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        details > div {
+            padding: 15px;
+            background-color: #ffffff;
+            border-top: 1px solid #dcdcdc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Principle 2: Give the model time to "think"</h1>
+
+        <h2>Tactic 1: Specify the steps required to complete a task</h2>
+
+        <div class="example">
+            <p><strong>Text to be summarized:</strong></p>
+            <div class="code-block">
+text = f"""
+In a charming village, siblings Jack and Jill set out on \
+a quest to fetch water from a hilltop \
+well. As they climbed, singing joyfully, misfortune \
+struck—Jack tripped on a stone and tumbled \
+down the hill, with Jill following suit. \
+Though slightly battered, the pair returned home to \
+comforting embraces. Despite the mishap, \
+their adventurous spirits remained undimmed, and they \
+continued exploring with delight.
+"""</div>
+
+            <details>
+                <summary>Example 1: Specifying Steps (Unformatted Output)</summary>
+                <div>
+                    <p><strong>Prompt 1:</strong></p>
+                    <div class="code-block">
+prompt_1 = f"""
+Perform the following actions: 
+1 - Summarize the following text delimited by triple \
+backticks with 1 sentence.
+2 - Translate the summary into French.
+3 - List each name in the French summary.
+4 - Output a json object that contains the following \
+keys: french_summary, num_names.
+
+Separate your answers with line breaks.
+
+Text:
+```&#123;text}```
+"""
+response = get_completion(prompt_1)
+print("Completion for prompt 1:")
+print(response)
+                    </div>
+                    <p><strong>Simulated Response:</strong></p>
+                    <div class="output-block">
+Siblings Jack and Jill, despite a tumble while fetching water from a hilltop well, returned home safely with their adventurous spirits intact.
+Les frères et sœurs Jack et Jill, malgré une chute en allant chercher de l'eau à un puits au sommet d'une colline, sont rentrés sains et saufs, leur esprit d'aventure étant intact.
+Jack
+Jill
+{"french_summary": "Les frères et sœurs Jack et Jill, malgré une chute en allant chercher de l'eau à un puits au sommet d'une colline, sont rentrés sains et saufs, leur esprit d'aventure étant intact.", "num_names": 2}
+                    </div>
+                </div>
+            </details>
+            
+            <details>
+                <summary>Example 2: Specifying Steps and Output Format</summary>
+                <div>
+                    <p><strong>Prompt 2:</strong></p>
+                    <div class="code-block">
+prompt_2 = f"""
+Your task is to perform the following actions: 
+1 - Summarize the following text delimited by 
+  &lt;&gt; with 1 sentence.
+2 - Translate the summary into French.
+3 - List each name in the French summary.
+4 - Output a json object that contains the 
+  following keys: french_summary, num_names.
+
+Use the following format:
+Text: &lt;text to summarize&gt;
+Summary: &lt;summary&gt;
+Translation: &lt;summary translation&gt;
+Names: &lt;list of names in summary&gt;
+Output JSON: &lt;json with summary and num_names&gt;
+
+Text: &lt;{text}&gt;
+"""
+response = get_completion(prompt_2)
+print("\nCompletion for prompt 2:")
+print(response)
+                    </div>
+                    <p><strong>Simulated Response:</strong></p>
+                    <div class="output-block">
+Summary: Siblings Jack and Jill, despite a tumble while fetching water from a hilltop well, returned home safely with their adventurous spirits intact.
+Translation: Les frères et sœurs Jack et Jill, malgré une chute en allant chercher de l'eau à un puits au sommet d'une colline, sont rentrés sains et saufs, leur esprit d'aventure étant intact.
+Names: Jack, Jill
+Output JSON: {"french_summary": "Les frères et sœurs Jack et Jill, malgré une chute en allant chercher de l'eau à un puits au sommet d'une colline, sont rentrés sains et saufs, leur esprit d'aventure étant intact.", "num_names": 2}
+                    </div>
+                </div>
+            </details>
+        </div>
+
+
+        <h2>Tactic 2: Instruct the model to work out its own solution before rushing to a conclusion</h2>
+
+        <div class="example">
+            <p><strong>Initial Prompt (Can lead to errors):</strong></p>
+            <div class="code-block">
+prompt = f"""
+Determine if the student's solution is correct or not.
+
+Question:
+I'm building a solar power installation and I need \
+help working out the financials. 
+- Land costs $100 / square foot
+- I can buy solar panels for $250 / square foot
+- I negotiated a contract for maintenance that will cost \
+me a flat $100k per year, and an additional $10 / square \
+foot
+What is the total cost for the first year of operations \
+as a function of the number of square feet.
+
+Student's Solution:
+Let x be the size of the installation in square feet.
+Costs:
+1. Land cost: 100x
+2. Solar panel cost: 250x
+3. Maintenance cost: 100,000 + 100x
+Total cost: 100x + 250x + 100,000 + 100x = 450x + 100,000
+"""
+response = get_completion(prompt)
+print(response)
+            </div>
+            <p><strong>Simulated Initial Response:</strong></p>
+            <div class="output-block" style="border-left-color: #f39c12;">
+The student's solution is incorrect. The maintenance cost per square foot is $10, not $100, so the student's calculation for maintenance cost (100x) is wrong. The correct maintenance cost should be 100,000 + 10x. The correct total cost should be 360x + 100,000.
+            </div>
+            <p style="font-style: italic;">Note that the student's solution is actually not correct. We can fix this by instructing the model to work out its own solution first.</p>
+
+            <details open>
+                <summary>Corrected Prompt: Instructing the model to "Think First"</summary>
+                <div>
+                    <p><strong>Corrected Prompt (With Thinking):</strong></p>
+                    <div class="code-block">
+prompt = f"""
+Your task is to determine if the student's solution \
+is correct or not.
+To solve the problem do the following:
+- First, work out your own solution to the problem including the final total. 
+- Then compare your solution to the student's solution \ 
+and evaluate if the student's solution is correct or not. 
+Don't decide if the student's solution is correct until 
+you have done the problem yourself.
+
+Use the following format:
+Question:
+```
+question here
+```
+Student's solution:
+```
+student's solution here
+```
+Actual solution:
+```
+steps to work out the solution and your solution here
+```
+Is the student's solution the same as actual solution \
+just calculated:
+```
+yes or no
+```
+Student grade:
+```
+correct or incorrect
+```
+
+Question:
+```
+I'm building a solar power installation and I need help \
+working out the financials. 
+- Land costs $100 / square foot
+- I can buy solar panels for $250 / square foot
+- I negotiated a contract for maintenance that will cost \
+me a flat $100k per year, and an additional $10 / square \
+foot
+What is the total cost for the first year of operations \
+as a function of the number of square feet.
+``` 
+Student's solution:
+```
+Let x be the size of the installation in square feet.
+Costs:
+1. Land cost: 100x
+2. Solar panel cost: 250x
+3. Maintenance cost: 100,000 + 100x
+Total cost: 100x + 250x + 100,000 + 100x = 450x + 100,000
+```
+Actual solution:
+</div>
+                    <p><strong>Simulated Response:</strong> The model follows the internal "thinking" steps to arrive at the correct answer.</p>
+                    <div class="output-block">
+
+                        </div>
+                </div>
+            </details>
+        </div>
+
+        <hr>
+
+        <h3>Model Limitations: Hallucinations (Example) ⚠️</h3>
+
+        <div class="example" style="border-color: #95a5a6;">
+            <p><strong>Prompt:</strong> Asking the model about a fictional product.</p>
+            <div class="code-block">
+prompt = f"""
+Tell me about AeroGlide UltraSlim Smart Toothbrush by Boie
+"""
+response = get_completion(prompt)
+print(response)
+            </div>
+            <p><strong>Simulated Response:</strong> The model confidently provides details for a product that does not exist.</p>
+            <div class="output-block" style="border-left-color: #95a5a6; background-color: #f7f9f9;">
+The AeroGlide UltraSlim Smart Toothbrush by Boie is a revolutionary oral hygiene product known for its sleek, minimalist design and advanced sonic vibration technology. It features ultra-fine, tapered bristles made from medical-grade silicone for a gentle yet effective clean. The 'Smart' feature includes pressure sensors and a built-in timer that connects via an app to track brushing habits and ensure optimal gum health. It is particularly noted for its long battery life and magnetic charging base.
+
+<br>
+<strong>(Note: Boie is a real company, but the "AeroGlide UltraSlim Smart Toothbrush" is a hallucination—a made-up product detail.)</strong>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
