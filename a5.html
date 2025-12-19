@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Titan Battles: A 5-Day Curriculum</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 900px; margin: 0 auto; padding: 20px; background-color: #f4f7f6; }
+        header { background: #2c3e50; color: white; padding: 2rem; border-radius: 10px; text-align: center; margin-bottom: 2rem; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        .titan-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px; }
+        .titan-card { border: 2px solid #ddd; padding: 15px; border-radius: 8px; text-align: center; transition: transform 0.2s; }
+        .titan-card:hover { transform: translateY(-5px); border-color: #3498db; }
+        .tabs { display: flex; cursor: pointer; background: #ddd; border-radius: 8px 8px 0 0; overflow: hidden; }
+        .tab { flex: 1; padding: 15px; text-align: center; font-weight: bold; transition: 0.3s; }
+        .tab.active { background: #3498db; color: white; }
+        .tab-content { display: none; background: white; padding: 20px; border: 1px solid #ddd; border-top: none; border-radius: 0 0 8px 8px; }
+        .tab-content.active { display: block; }
+        .activity-box { background: #e8f4fd; border-left: 5px solid #3498db; padding: 15px; margin: 15px 0; }
+        .prediction-box { background: #fff3cd; border-left: 5px solid #ffc107; padding: 15px; margin: 15px 0; font-style: italic; }
+        footer { text-align: center; margin-top: 3rem; font-size: 0.9rem; color: #7f8c8d; }
+        h2, h3 { color: #2c3e50; }
+        .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; margin-bottom: 10px; }
+        .badge-power { background: #e74c3c; color: white; }
+        .badge-vibe { background: #2ecc71; color: white; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>🚀 AI Titan Battles</h1>
+    <p>A 5-Day Interactive Lesson Plan for Parents & Future Tech Leaders</p>
+</header>
+
+<section class="card">
+    <h2>1. The Core Concept: Super Autocomplete</h2>
+    <p>Before meeting the Titans, explain the "Super Autocomplete" analogy:</p>
+    <ul>
+        <li><strong>The Phone:</strong> Guesses the next word based on the last 3 texts you sent.</li>
+        <li><strong>An LLM:</strong> Guesses the next word based on almost everything ever written on the internet.</li>
+        <li><strong>The Probability Game:</strong> AIs assign "points" to words. In "The dog jumped over the...", <em>Fence</em> might get 99 points, while <em>Moon</em> gets 1 point.</li>
+    </ul>
+</section>
+
+<section class="card">
+    <h2>2. Meet the Titans</h2>
+    <p>Different companies train their AIs to have different "voices" and "rules". Choose your character:</p>
+    <div class="titan-grid">
+        <div class="titan-card">
+            <span class="badge badge-power">The Iron Man</span>
+            <h3>GPT-4o</h3>
+            <p><strong>Vibe:</strong> High-tech all-rounder.</p>
+            <p><strong>Superpower:</strong> Versatility & Voice.</p>
+        </div>
+        <div class="titan-card">
+            <span class="badge badge-power">Professor X</span>
+            <h3>Claude 3.5</h3>
+            <p><strong>Vibe:</strong> Polite literary genius.</p>
+            <p><strong>Superpower:</strong> Best writer & coder.</p>
+        </div>
+        <div class="titan-card">
+            <span class="badge badge-power">Spider-Man</span>
+            <h3>Gemini</h3>
+            <p><strong>Vibe:</strong> Fast & connected.</p>
+            <p><strong>Superpower:</strong> Real-time Google info.</p>
+        </div>
+        <div class="titan-card">
+            <span class="badge badge-power">The Lego Set</span>
+            <h3>Llama 3</h3>
+            <p><strong>Vibe:</strong> The Rebel Builder.</p>
+            <p><strong>Superpower:</strong> Open source & private.</p>
+        </div>
+    </div>
+</section>
+
+<section class="card">
+    <h2>3. The 5-Day Curriculum</h2>
+    <div class="tabs">
+        <div class="tab active" onclick="openTab(event, 'day1')">Day 1: Tokens</div>
+        <div class="tab" onclick="openTab(event, 'day2')">Day 2: The Desk</div>
+        <div class="tab" onclick="openTab(event, 'day3')">Day 3: The Haystack</div>
+        <div class="tab" onclick="openTab(event, 'day4')">Day 4: RAG</div>
+        <div class="tab" onclick="openTab(event, 'day5')">Day 5: Project</div>
+    </div>
+
+    <div id="day1" class="tab-content active">
+        <h3>Tokens: The DNA of Memory</h3>
+        <p>AI doesn't count words; it counts <strong>Tokens</strong> (word chunks).</p>
+        <div class="activity-box">
+            <strong>The Activity:</strong> Ask ChatGPT and Llama: <em>"How many tokens are in the sentence: 'The prehistoric pterodactyl was incredibly aerodynamic'?"</em>
+        </div>
+        <p><strong>The Lesson:</strong> Simple words are 1 brick; complex words are 3 bricks. If you run out of tokens, the AI's "memory" is full.</p>
+    </div>
+
+    <div id="day2" class="tab-content">
+        <h3>The "Desk" Limit (Context Window)</h3>
+        <p>Every LLM has a "Desk Size." Once full, old info "falls off" and is forgotten.</p>
+        <div class="activity-box">
+            <strong>The Activity:</strong> Give an AI a secret: <em>"My favorite color is Magenta."</em> Then paste 10 pages of a book. Ask: <em>"What is my favorite color?"</em>
+        </div>
+        <p><strong>The Lesson:</strong> Larger windows = bigger desks. Some models remember better than others.</p>
+    </div>
+
+    <div id="day3" class="tab-content">
+        <h3>Lost in the Middle (The Haystack)</h3>
+        <p>AIs get "distracted" by stuff in the middle of a long conversation.</p>
+        <div class="activity-box">
+            <strong>The Activity:</strong> Paste a massive Wikipedia article. Hide the sentence: <em>"The secret code is: PINEAPPLE"</em> right in the middle. Ask the AI for the code.
+        </div>
+        <p><strong>The Lesson:</strong> Important info should go at the <strong>start</strong> or the <strong>end</strong> of your prompt, not the middle.</p>
+    </div>
+
+    <div id="day4" class="tab-content">
+        <h3>RAG: The External Hard Drive</h3>
+        <p>When the desk is too small, AI uses <strong>Retrieval-Augmented Generation (RAG)</strong> to look things up.</p>
+        <div class="activity-box">
+            <strong>The Activity:</strong> Ask Llama (offline) and Gemini (connected): <em>"What was the weather in Paris yesterday?"</em>
+        </div>
+        <p><strong>The Lesson:</strong> RAG is like a library card; it helps the AI learn things it wasn't "born" knowing.</p>
+    </div>
+
+    <div id="day5" class="tab-content">
+        <h3>Project Day: The Team Leader</h3>
+        <p>A good AI user uses the <strong>Best Titan</strong> for each part of the job.</p>
+        <div class="activity-box">
+            <strong>The Task:</strong> Create a Board Game.
+            <ul>
+                <li><strong>Claude:</strong> Write the "Flavor Text" and story.</li>
+                <li><strong>Llama:</strong> Write the Python code for a Dice Roller.</li>
+                <li><strong>Gemini:</strong> Find real-world game trends for inspiration.</li>
+                <li><strong>ChatGPT:</strong> "Red-Team" the rules—find ways to cheat!</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="card">
+    <h2>4. The "Vibe Check" Coding Challenge</h2>
+    <p>Test the personality differences between <strong>Claude</strong> and <strong>ChatGPT</strong>.</p>
+    <div class="activity-box">
+        <strong>The Prompt:</strong> <em>"Write a Python script using the turtle library to create a 'Hypnotic Space Spiral.' The background should be black, the pen should cycle through neon colors, and it should draw very fast."</em>
+    </div>
+    <div class="prediction-box">
+        <strong>Look for:</strong> Claude will be precise and give clean code. ChatGPT will talk a lot more and act like a "Supportive Coach."
+    </div>
+</section>
+
+<footer>
+    <p>Based on LLM Curriculum Guidelines • Created for Interactive Learning</p>
+</footer>
+
+<script>
+    function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+            tabcontent[i].classList.remove("active");
+        }
+        tablinks = document.getElementsByClassName("tab");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].classList.remove("active");
+        }
+        document.getElementById(tabName).style.display = "block";
+        document.getElementById(tabName).classList.add("active");
+        evt.currentTarget.classList.add("active");
+    }
+</script>
+
+</body>
+</html>
